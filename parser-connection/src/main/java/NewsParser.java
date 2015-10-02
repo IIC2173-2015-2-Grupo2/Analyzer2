@@ -1,37 +1,26 @@
 import java.util.*;
 
-public class NewsParser implements NewArrivalListener{
-	private Queue<String> newsToParse;
-	private static NewArrivalListener newTaggerListener;
-	private static NewArrivalListener newSaverListener;
-
-	//	Object parserLock;
+public class NewsParser {
+	private String newsToParse;
+	private NewsTagger newsTagger;
+	private NewsSaver newsSaver;
+	private String[] forSaver;
+	private String forTagger;
 
 	public NewsParser(){
-		newsToParse = new LinkedList<>();
-		//		parserLock = new Object();
-		NewArrivalHandler.createListener(this);
-	}
-
-	public static void createTaggerListener(NewArrivalListener listener){
-		newTaggerListener = listener;
-	}
-
-	public static void createSaverListener(NewArrivalListener listener){
-		newSaverListener = listener;
+		newsToParse = "";
+		newsSaver = new NewsSaver();
+		newsTagger = new NewsTagger();
 	}
 
 	public void newArrival(String s){
-		//		synchronized (parserLock) {
-		newsToParse.add(s);
-		//		}
-		if (newsToParse.size() == 1)
-			parseNews();
+		newsToParse = s;
+		parseNews();
 	}
 
 	private void parseNews(){
 		JSONObject jsonObject;
-		jsonObject = new JSONObject(newsToParse.poll());
+		jsonObject = new JSONObject();
 		//TODO: Parsear el JSON, entregar el cuerpo al tagger y el resto al DBManager
 
 		//			if(newsToParse.size() > 1){
