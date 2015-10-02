@@ -1,9 +1,15 @@
+package Getter;
 import static spark.Spark.*;
+
+import spark.Spark;
 
 public class Main {
 
 	public static void main(String[] args) {
-		post("/analyzer", (req, res) -> "Hello World");
+		
+		Spark.post("/analyzer", (req, res) -> {
+			
+		});
 	}
 
 }

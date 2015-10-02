@@ -1,4 +1,7 @@
+package Getter;
 import java.util.*;
+
+import Saver.NewsSaver;
 
 public class NewsParser {
 	private String newsToParse;
