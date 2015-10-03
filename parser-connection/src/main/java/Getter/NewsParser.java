@@ -8,6 +8,11 @@ import org.json.JSONObject;
 import Saver.NewsSaver;
 import Tagger.Tagger;
 
+/**
+ * Clase encargada de sacar la información contenida en el JSON y enviarla a los distintos adaptadores.
+ * @author estebandib
+ *
+ */
 public class NewsParser {
 	private String newsToParse;
 	private String forTagger;
@@ -19,19 +24,23 @@ public class NewsParser {
 		newsToParse = "";
 		parserLock = l;
 	}
-
+	/**
+	 * Procesa la nueva llegada de JSON
+	 * @param s el JSON
+	 */
 	public void newArrival(String s){
 		newsToParse = s;
 		parseNews();
 	}
-	//estructura del json 
+	//Estructura del json 
 	//{ [ {title=>"Titulo", time=>"yyyy-mm-dd hh:mm:ss", header=>"Descripcion", url=>"url a la pagina", body=>"todo el body de la noticia" tags: [ ]},{noticia2},... ] }
+	/**
+	 * Se encarga de obtener la información desde el JSON
+	 */
 	private void parseNews(){
 		String title, date, header, url, body, tags;
 		title = date = header = url = body = tags = "";
-		//JSONObject jsonObject;
 		JSONArray allNews = new JSONArray(newsToParse); //ojo acá, puede que no lo tome como array
-		//jsonObject = new JSONObject(newsToParse);
 		for (Object jsonObject : allNews) {
 			title += (String) ((JSONObject)jsonObject).get("title") + "*";
 			date += (String) ((JSONObject)jsonObject).get("time") + "*";
@@ -52,8 +61,5 @@ public class NewsParser {
 		
 		parserLock.unlock();
 		
-		//TODO: Parsear el JSON, entregar el cuerpo al tagger y el resto al DBManager enviar arreglo
-		//de strings a Saver con newContentArrival(content) y el body al Tagger con tagNews(body)
-		//release el lock antes de enviar las cosas al tagger y el saver
 	}
 }

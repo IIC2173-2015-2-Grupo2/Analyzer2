@@ -1,5 +1,10 @@
 package Saver;
 
+/**
+ * Contiene la información de login y conexión con la base de datos.
+ * @author estebandib
+ *
+ */
 public class DatabaseManager {
 	private static String Port, Host, Password, User;
 	public static void createDatabaseManager(){

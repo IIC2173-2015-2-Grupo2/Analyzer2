@@ -2,6 +2,12 @@ package Getter;
 
 import Saver.NewsSaver;
 
+/**
+ * Adaptador entre el Parser del componente y el Saver. Extiende Thread para poder independizarse de las
+ * acciones del parser.
+ * @author estebandib
+ *
+ */
 public class GetterSaverAdapter extends Thread{
 	private String[] toProcess;
 	private NewsSaver newsSaver;
@@ -12,6 +18,10 @@ public class GetterSaverAdapter extends Thread{
 	public void run(){
 		saveNews();
 	}
+	
+	/**
+	 * Guarda, de a una, las noticias en la base de datos.
+	 */
 	private void saveNews(){
 		String[] titlesToSave = toProcess[0].split("*");
 		String[] datesToSave = toProcess[1].split("*");
