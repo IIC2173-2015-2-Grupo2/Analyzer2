@@ -1,5 +1,5 @@
 package Tagger;
-import Tag;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
