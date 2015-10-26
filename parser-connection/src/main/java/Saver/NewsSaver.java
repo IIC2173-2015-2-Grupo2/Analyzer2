@@ -86,6 +86,7 @@ public class NewsSaver {
 			
 			ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
 			relationTag.close();
+		}
 	}
 
 	private int getIdFromJsonResult(String result){
