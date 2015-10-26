@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 !json-20150729.jar
 *.war
 *.ear
