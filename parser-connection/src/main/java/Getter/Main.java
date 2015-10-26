@@ -2,6 +2,7 @@ package Getter;
 import static spark.Spark.*;
 
 import Saver.DatabaseManager;
+import Tagger.NLP;
 import spark.Spark;
 
 public class Main {
@@ -10,8 +11,9 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		DatabaseManager.createDatabaseManager();
-		Spark.post("/analyzer", (req, res) -> processPost());
+		//DatabaseManager.createDatabaseManager();
+		//Spark.post("/analyzer", (req, res) -> processPost());
+		NLP nlp = new NLP();
 	}
 	/**
 	 * Procesa el post, es decir, comienza con la primera etapa del Pipe & Filter.
