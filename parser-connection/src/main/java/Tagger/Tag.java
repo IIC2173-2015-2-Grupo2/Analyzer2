@@ -4,7 +4,7 @@ public class Tag {
 	
 	public static final int MIN_LEN_TAG = 4;
 	
-	private String name;
+	private String content;
 	private String startsWith;
 	private int timesWasQueried;
 	private int timesFound;
@@ -12,7 +12,7 @@ public class Tag {
 	
 	
 	public Tag(String name){
-		this.name = name;
+		this.content = name;
 		String[] words = name.split(" ");
 		
 		String candidate = words[0];
@@ -27,8 +27,8 @@ public class Tag {
 		
 	}
 	
-	public String getName(){
-		return this.name;
+	public String getContent(){
+		return this.content;
 	}
 	
 	public String getStartsWith(){

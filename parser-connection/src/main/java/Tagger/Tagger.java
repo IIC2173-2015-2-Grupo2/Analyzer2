@@ -51,7 +51,7 @@ public class Tagger {
 	}
 	
 	public String mayBeTag(String token){
-		return existingTags.get(token).getName();
+		return existingTags.get(token).getContent();
 	}
 	
 	
