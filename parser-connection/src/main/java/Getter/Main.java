@@ -10,8 +10,14 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
 		DatabaseManager.createDatabaseManager();
 		Spark.post("/analyzer", (req, res) -> processPost());
+		
+		
+		
+		
+		
 	}
 	/**
 	 * Procesa el post, es decir, comienza con la primera etapa del Pipe & Filter.
