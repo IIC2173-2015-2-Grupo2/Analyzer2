@@ -1,8 +1,6 @@
 package Getter;
-import static spark.Spark.*;
 
 import Saver.DatabaseManager;
-import Tagger.NLP;
 import spark.Request;
 import spark.Spark;
 

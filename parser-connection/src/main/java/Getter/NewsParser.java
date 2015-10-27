@@ -1,12 +1,9 @@
 package Getter;
-import java.util.*;
 import java.util.concurrent.locks.Lock;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import Saver.NewsSaver;
-import Tagger.Tagger;
 
 /**
  * Clase encargada de sacar la información contenida en el JSON y enviarla a los distintos adaptadores.

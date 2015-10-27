@@ -48,7 +48,7 @@ public class Tagger {
 				
 			}			
 		}
-		
+		sc.close();
 		return (String[]) tags.toArray();
 	}
 	

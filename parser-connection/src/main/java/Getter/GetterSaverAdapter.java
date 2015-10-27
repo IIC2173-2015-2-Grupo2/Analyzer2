@@ -1,6 +1,5 @@
 package Getter;
 
-import java.util.concurrent.locks.Lock;
 
 import Saver.NewsSaver;
 

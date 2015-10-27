@@ -1,7 +1,6 @@
 package Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import Tagger.Tagger;
 

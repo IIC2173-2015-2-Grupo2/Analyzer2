@@ -6,12 +6,14 @@ public class Tag {
 	
 	private String content;
 	private String startsWith;
-	private int timesWasQueried;
-	private int timesFound;
+//	private int timesWasQueried;
+//	private int timesFound;
 	
 	
 	
 	public Tag(String content){
+//		timesFound = 0;
+//		timesWasQueried = 0;
 		this.content = content;
 		String[] words = content.split(" ");
 		
@@ -35,13 +37,13 @@ public class Tag {
 		return this.startsWith;
 	}
 	
-	public void queried(){
-		this.timesWasQueried++;
-	}
-	
-	public void found(){
-		this.timesFound++;
-	}
+//	public void queried(){
+//		this.timesWasQueried++;
+//	}
+//	
+//	public void found(){
+//		this.timesFound++;
+//	}
 	
 	
 	

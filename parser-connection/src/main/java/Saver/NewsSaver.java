@@ -1,6 +1,5 @@
 package Saver;
 
-import javax.xml.crypto.Data;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -11,20 +10,21 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.Client;
 
-private static String titleColumn = "title";
-private static String dateColumn = "date";
-private static String headerColumn = "header";
-private static String urlColumn = "url";
 
-private static String newsItemNodeLabel = "NewsItem";
-private static String tagNodeLabel = "Tag";
-private static String nameColumn = "name";
 /**
  * Clase encargada de guardar la información en la base de datos
  * @author estebandib
  *
  */
 public class NewsSaver {
+	private static String titleColumn = "title";
+	private static String dateColumn = "date";
+	private static String headerColumn = "header";
+	private static String urlColumn = "url";
+
+	private static String newsItemNodeLabel = "NewsItem";
+	private static String tagNodeLabel = "Tag";
+	private static String nameColumn = "name";
 	String title, tags, header, date, url, imageUrl;
 	final String port, host, password, user;
 	public NewsSaver(){
