@@ -21,7 +21,7 @@ public class NewArrivalHandler {
 	 * un solo thread parseando información a la vez.
 	 * @param s es el JSON
 	 */
-	protected void newArrival(String s){
+	public void newArrival(String s){
 		parserLock.lock();
 		newsParser.newArrival(s);
 	}

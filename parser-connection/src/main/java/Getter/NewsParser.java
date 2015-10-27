@@ -51,6 +51,7 @@ public class NewsParser {
 		}
 		
 		int end = title.length()-1;
+		
 		String[] forSaver = {title.substring(0,end), date.substring(0,end), header.substring(0,end), url.substring(0, end), tags.substring(0, end)};
 		getterSaverAdapter = new GetterSaverAdapter(forSaver);
 		getterSaverAdapter.start();
