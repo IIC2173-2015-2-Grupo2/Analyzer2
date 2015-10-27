@@ -18,6 +18,10 @@ public class Feed {
 	 * Makes the post request to google
 	 * 
 	 * */
+	
+
+	
+	
 	public static String getGoogleTrends(int iyear,int imonth, int iday,int location) throws IOException{
 		
 		String year = iyear+"";
@@ -192,8 +196,8 @@ public static String getGoogleTopCharts(int iyear,int imonth) throws IOException
 				
 				for(int k = 0 ; k < entityList.length() ; k++){
 					String keyword = entityList.getJSONObject(k).getString("title");
-					keywords.add( keyword + " :: " + category );
-
+					//keywords.add( keyword + " :: " + category );
+					//keywords.add(keyword);
 				}
 				
 			}

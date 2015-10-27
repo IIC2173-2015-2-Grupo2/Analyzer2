@@ -11,9 +11,9 @@ public class Tag {
 	
 	
 	
-	public Tag(String name){
-		this.content = name;
-		String[] words = name.split(" ");
+	public Tag(String content){
+		this.content = content;
+		String[] words = content.split(" ");
 		
 		String candidate = words[0];
 		
