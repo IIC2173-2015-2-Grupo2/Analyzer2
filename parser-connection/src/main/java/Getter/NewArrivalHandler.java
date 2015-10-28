@@ -1,6 +1,7 @@
 package Getter;
 
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Abstracción para procesar los post de a uno.
@@ -11,6 +12,7 @@ public class NewArrivalHandler {
 	private NewsParser newsParser;
 	private Lock parserLock;
 	public NewArrivalHandler(){
+		parserLock = new ReentrantLock();
 		newsParser = new NewsParser(parserLock);
 	}
 	

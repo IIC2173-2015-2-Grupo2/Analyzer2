@@ -2,6 +2,8 @@ package Getter;
 
 
 
+import java.util.ArrayList;
+
 import Tagger.Tagger;
 
 /**
@@ -11,12 +13,11 @@ import Tagger.Tagger;
  *
  */
 public class GetterTaggerAdapter extends Thread{
-	private String[] bodies;
-	private String stringBodies;
+	private ArrayList<String> bodies;
 	private Tagger tagger;
-	public GetterTaggerAdapter(String b){
+	public GetterTaggerAdapter(ArrayList<String> b){
 		tagger = new Tagger();
-		stringBodies = b;
+		bodies = b;
 	}
 	public void run(){
 		sendList();
@@ -25,7 +26,6 @@ public class GetterTaggerAdapter extends Thread{
 	 * Envía la lista de cuerpos de noticia, una por una, al Tagger.
 	 */
 	private void sendList(){
-		bodies = stringBodies.split("*");
 		for (String string : bodies) {
 			try {
 				tagger.tagNews(string);

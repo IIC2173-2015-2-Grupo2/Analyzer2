@@ -18,9 +18,7 @@ import java.util.Scanner;
 public class Tagger {
 	
 	public static HashMap<String, Tag> existingTags;
-	
 	public String[] tagNews(String body) throws Exception{
-		
 		if(body == null || body.isEmpty()){
 			throw new Exception("empty body");
 		}
@@ -87,6 +85,34 @@ public class Tagger {
 		for (int i = 0; i < years.length; i++) {
 			hs.addAll(   Feed.parseChartsJSON(     Feed.getGoogleTopChartsLocation(years[i], "CL")   )   );
 		}
+		
+		for (String tagContent : hs) {
+			addTag(tagContent);
+		}
+		
+		
+	}
+	
+	public static void miniSeed() throws IOException{
+		existingTags = new HashMap<String, Tag>();
+		HashSet<String> hs = new HashSet<String>();
+		
+		for(int year = 2015 ; year <= 2015 ; year++){
+			for(int month = 12; month <= 12 ; month++){
+				for(int day = 1; day <= 28 ; day+=3){
+					ArrayList<String> kws = Feed.parseTrendsJSON(Feed.getGoogleTrends(year, month, day, 38));
+					hs.addAll(kws);
+				}
+			}
+		}
+		
+		for(int year = 2014 ; year <= 2014 ; year++){
+			for(int month = 12; month <= 12 ; month++){
+				hs.addAll(   Feed.parseChartsJSON(     Feed.getGoogleTopCharts(year, month)   )   );
+
+			}
+		}
+		
 		
 		for (String tagContent : hs) {
 			addTag(tagContent);
