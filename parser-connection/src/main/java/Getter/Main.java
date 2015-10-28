@@ -9,7 +9,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		port(8839);
 		DatabaseManager.createDatabaseManager();
 		post("/", (request, response) -> processPost(request, response));
 	}
@@ -21,7 +20,6 @@ public class Main {
 		NewArrivalHandler nah = new NewArrivalHandler();
 		nah.newArrival(request.body());
 		return response;
-		
 	}
 
 
