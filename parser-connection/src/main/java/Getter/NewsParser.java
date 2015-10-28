@@ -1,5 +1,9 @@
 package Getter;
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
+
+import javax.xml.crypto.Data;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,14 +16,19 @@ import org.json.JSONObject;
  */
 public class NewsParser {
 	private String newsToParse;
-	private String forTagger;
+	private ArrayList<String> forTagger;
 	private Lock parserLock;
 	private GetterTaggerAdapter getterTaggerAdapter;
 	private GetterSaverAdapter getterSaverAdapter;
+	private ArrayList<New> listAllNews;
+	private int debuggerCounter;
 
 	public NewsParser(Lock l){
 		newsToParse = "";
 		parserLock = l;
+		listAllNews = new ArrayList<New>();
+		forTagger = new ArrayList<String>();
+
 	}
 	/**
 	 * Procesa la nueva llegada de JSON
@@ -35,29 +44,31 @@ public class NewsParser {
 	 * Se encarga de obtener la información desde el JSON
 	 */
 	private void parseNews(){
-		String title, date, header, url, body, tags;
-		title = date = header = url = body = tags = "";
+		listAllNews.clear();
+		forTagger.clear();
+		debuggerCounter = 0;
 		JSONArray allNews = new JSONArray(newsToParse); //ojo acá, puede que no lo tome como array
 		for (Object jsonObject : allNews) {
-			title += (String) ((JSONObject)jsonObject).get("title") + "*";
-			date += (String) ((JSONObject)jsonObject).get("time") + "*";
-			header += (String) ((JSONObject)jsonObject).get("header") + "*";
-			url += (String) ((JSONObject)jsonObject).get("url") + "*";
-			body += (String) ((JSONObject)jsonObject).get("body") + "*";
-			tags += (String) ((JSONObject)jsonObject).getJSONArray("title").toString() + "*";
+			debuggerCounter++;
+			New recentNew = new New((String) ((JSONObject)jsonObject).get("title"),
+					(String) ((JSONObject)jsonObject).get("time"),
+					(String) ((JSONObject)jsonObject).get("header"),
+					(String) ((JSONObject)jsonObject).get("body"),
+					(String) ((JSONObject)jsonObject).get("url"),
+					(String) ((JSONObject)jsonObject).getJSONArray("tags").toString());
+			listAllNews.add(recentNew);
+			forTagger.add(recentNew.getBody());
 		}
 		
-		int end = title.length()-1;
 		
-		String[] forSaver = {title.substring(0,end), date.substring(0,end), header.substring(0,end), url.substring(0, end), tags.substring(0, end)};
-		getterSaverAdapter = new GetterSaverAdapter(forSaver);
+		getterSaverAdapter = new GetterSaverAdapter(listAllNews);
 		getterSaverAdapter.start();
 		
-		forTagger = body.substring(0, body.length()-1);
 		getterTaggerAdapter = new GetterTaggerAdapter(forTagger);
 		getterTaggerAdapter.start();
 		
 		parserLock.unlock();
 		
 	}
+	
 }

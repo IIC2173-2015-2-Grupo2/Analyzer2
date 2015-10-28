@@ -1,6 +1,8 @@
 package Getter;
 
 
+import java.util.ArrayList;
+
 import Saver.NewsSaver;
 
 /**
@@ -10,11 +12,11 @@ import Saver.NewsSaver;
  *
  */
 public class GetterSaverAdapter extends Thread{
-	private String[] toProcess;
+	private ArrayList<New> toProcess;
 	private NewsSaver newsSaver;
-	public GetterSaverAdapter(String[] tp){
+	public GetterSaverAdapter(ArrayList<New> allNews){
 		newsSaver = new NewsSaver();
-		toProcess = tp;
+		toProcess = allNews;
 	}
 	public void run(){
 		saveNews();
@@ -24,13 +26,8 @@ public class GetterSaverAdapter extends Thread{
 	 * Guarda, de a una, las noticias en la base de datos.
 	 */
 	private void saveNews(){
-		String[] titlesToSave = toProcess[0].split("*");
-		String[] datesToSave = toProcess[1].split("*");
-		String[] headersToSave = toProcess[2].split("*");
-		String[] urlsToSave = toProcess[3].split("*");
-		String[] tagsToSave = toProcess[4].split("*");
-		for (int i = 0; i < toProcess.length; i++) {
-			String[] toSave = {titlesToSave[i], datesToSave[i], headersToSave[i], urlsToSave[i], tagsToSave[i]};
+		for (New news : toProcess){
+			String[] toSave = {news.getTitle(), news.getDate(), news.getHeader(), news.getUrl(), news.getTags()};
 			newsSaver.saveInDataBase(toSave);
 		}
 	}
