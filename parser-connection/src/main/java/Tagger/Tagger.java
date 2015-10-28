@@ -47,6 +47,13 @@ public class Tagger {
 			}			
 		}
 		sc.close();
+		
+		System.out.println("for the news: " + body.substring(0, 20) + "... the following tags where  assigned: ");
+		
+		for (String tag : tags) {
+			System.out.println(tag);
+		}
+		
 		return (String[]) tags.toArray();
 	}
 	
