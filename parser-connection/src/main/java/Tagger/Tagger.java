@@ -23,13 +23,15 @@ public class Tagger {
 			throw new Exception("empty body");
 		}
 		
+		
+		/*
 		ArrayList<String> tags = new ArrayList<String>();
 		Scanner sc = new Scanner(body);
 		
 		String token = sc.next();
 		
 
-		
+		/*
 		while(sc.hasNext()){
 			while(token.length() < Tag.MIN_LEN_TAG && sc.hasNext()){
 				token += " " + sc.next();
@@ -47,17 +49,23 @@ public class Tagger {
 			}			
 		}
 		sc.close();
+		*/
 		
-		System.out.println("for the news: " + body.substring(0, 20) + "... the following tags where  assigned: ");
-		
+		//System.out.println("for the news: " + body.substring(0, 20) + "... the following tags where  assigned: ");
+		/*
 		for (String tag : tags) {
 			System.out.println(tag);
 		}
-		
-		return (String[]) tags.toArray();
+		*/
+		return (String[]) NLP.getTags(body).toArray();
 	}
 	
 	public static void addTag(String tagName){
+		
+		if(existingTags == null){
+			existingTags = new HashMap<String, Tag>();
+		}
+		
 		Tag t = new Tag(tagName);
 		existingTags.put(t.getStartsWith(), t);
 	}
@@ -67,7 +75,7 @@ public class Tagger {
 	}
 	
 	
-	
+	/*
 	public static void seed() throws IOException{
 		HashSet<String> hs = new HashSet<String>();
 		
@@ -94,8 +102,11 @@ public class Tagger {
 		}
 		
 		for (String tagContent : hs) {
+			System.out.println(tagContent);
 			addTag(tagContent);
 		}
+		
+
 		
 		
 	}
@@ -127,6 +138,6 @@ public class Tagger {
 		
 		
 	}
-	
+	*/
 	
 }

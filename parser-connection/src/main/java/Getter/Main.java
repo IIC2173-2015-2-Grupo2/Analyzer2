@@ -19,15 +19,24 @@ public class Main{
 	
 	public static void main(String[] args) {
 
-		DatabaseManager.createDatabaseManager();
 		
+	/*	try {
+			Tagger.seed();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
+		DatabaseManager.createDatabaseManager();
+
+		/*
 		try {
 			Tagger.miniSeed();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		post("/", (request, response) -> /*processPost(request, response)*/{
 			NewArrivalHandler nah = new NewArrivalHandler();
 			nah.newArrival(request.body());

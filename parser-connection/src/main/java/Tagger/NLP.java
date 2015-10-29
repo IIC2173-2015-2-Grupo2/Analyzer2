@@ -8,13 +8,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+
+
+
 public class NLP {
 	//TODO: Ordenar porque cambié de lista a map
-	ArrayList<String> importantWords;
-	ArrayList<String> listText;
-	ArrayList<String> repeatedWords;
-	Map<String, Integer> wordCount;
-	public ArrayList<Tag> getTags(String text){
+	static ArrayList<String> importantWords;
+	static ArrayList<String> listText;
+	static ArrayList<String> repeatedWords;
+	static Map<String, Integer> wordCount;
+	public static  ArrayList<String> getTags(String text){
 //		text = "El ministro Juan Manuel Muñoz aceptó la solicitud de la defensa de las tres víctimas de Fernando Karadima -encabezada por el abogado Juan Pablo Hermosilla- respecto a que el papa Francisco declare por exhorto en el marco de la demanda contra el Arzobispado de Santiago por los supuestos actos de encubrimiento de obispos en materia de abuso sexual. "
 //				+ "Ello, luego de conocer los dichos del pontífice que defiende al obispo de Osorno Juan Barros, contra quien pesan acusaciones de encubrir los abusos del ex párroco de El Bosque. "
 //				+ "De esta manera, según detalló a Emol Hermosilla, el magistrado deberá redactar el exhorto que luego será enviado a la Corte Suprema, a cargo de remitirlo al Ministerio de Relaciones Exteriores. "
@@ -99,7 +102,11 @@ public class NLP {
 			}
 		}
 		
-		return createTags(repeatedWords, importantWords);
+		ArrayList<String> outputWords = new ArrayList<String>();
+		outputWords.addAll(repeatedWords);
+		outputWords.addAll(importantWords);
+		return outputWords;
+		//return createTags(repeatedWords, importantWords);
 	}
 	
 	private ArrayList<Tag> createTags(ArrayList<String> repeatedWords, ArrayList<String> importantWords) {
@@ -113,7 +120,7 @@ public class NLP {
 		return tagList;
 	}
 
-	private void deleteFromMap(String[] wordsToDelete){
+	private static void deleteFromMap(String[] wordsToDelete){
 		for (String word : wordsToDelete) {
 			if(repeatedWords.contains(word)){
 				repeatedWords.remove(word);
@@ -121,7 +128,7 @@ public class NLP {
 		}
 	}
 	
-	private String listToString(ArrayList<String> listText2) {
+	private static String listToString(ArrayList<String> listText2) {
 		String returnValue = "";
 		for (String string : listText2) {
 			returnValue += string + " ";
@@ -129,7 +136,7 @@ public class NLP {
 		return returnValue;
 	}
 	
-	private void fillCapitalLetterWords(String text){
+	private static void fillCapitalLetterWords(String text){
 		String[] words = text.split(" ");
 		for (String word : words) {
 			if(word.matches("^([A-Z][a-z]+)+$"))
@@ -137,7 +144,7 @@ public class NLP {
 		}
 	}
 	
-	private Map<String, Integer> findDuplicateString(String str) {
+	private static Map<String, Integer> findDuplicateString(String str) {
 	    String[] stringArrays = str.split(" ");
 	    Map<String, Integer> map = new HashMap<String, Integer>();
 	    Set<String> words = new HashSet<String>(Arrays.asList(stringArrays));
