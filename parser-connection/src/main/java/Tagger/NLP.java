@@ -97,7 +97,7 @@ public class NLP {
 		for (String word : listText) {
 			int times = wordCount.get(word);
 			System.out.println(word + "," + wordCount.get(word));
-			if(times >= 3){
+			if(times >= 2){
 				repeatedWords.add(word);
 			}
 		}

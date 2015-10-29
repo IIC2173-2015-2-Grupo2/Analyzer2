@@ -19,6 +19,13 @@ public class Main{
 	
 	public static void main(String[] args) {
 
+		Tagger t = new Tagger();
+		try {
+			t.tagNews("Alexis metio 2 golazos en la premier Michelle Bachelet");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	/*	try {
 			Tagger.seed();
