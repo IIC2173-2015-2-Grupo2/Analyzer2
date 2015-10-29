@@ -1,7 +1,6 @@
-FROM java:8
-EXPOSE 5000
+FROM maven:3.2-jdk-8
+EXPOSE 4567
 COPY . .
 WORKDIR .
-RUN ls -l
-RUN javac ./parser-connection/src/main/java/Getter/Main.java
-CMD ["java", "Main"]
+RUN mvn -f parser-connection/pom.xml package
+RUN mvn -f parser-connection/pom.xml exec:java
