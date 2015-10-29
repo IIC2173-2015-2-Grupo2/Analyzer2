@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.iic2015.parserconnection</groupId>
-	<artifactId>parser-connection</artifactId>
+	<groupId>com.iic2015</groupId>
+	<artifactId>parserconnection</artifactId>
 	<version>1.0</version>
 	<name>parser-connection</name>
 	<description>Servidor encargado de la conexion con el parser de la aplicacion</description>
@@ -17,6 +17,15 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>exec-maven-plugin</artifactId>
+	            <version>1.2.1</version>
+	            <configuration>
+	            	<includePluginDependencies>true</includePluginDependencies>
+	                <mainClass>Getter.Main</mainClass>
+	            </configuration>
+        	</plugin>
 		</plugins>
 	</build>
 
