@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path=""/>
-	<classpathentry exported="true" kind="lib" path="/Users/nicolas/Google Drive/2015-2/IIC2173-ArquitecturaDeSistemas/Proyecto/Analyzer2/parser-connection/json-20150729.jar"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
