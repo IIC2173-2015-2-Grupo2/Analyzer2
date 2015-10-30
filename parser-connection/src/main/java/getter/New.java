@@ -1,4 +1,4 @@
-package Getter;
+package getter;
 
 
 public class New {

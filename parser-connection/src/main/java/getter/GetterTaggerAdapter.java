@@ -1,10 +1,10 @@
-package Getter;
+package getter;
 
 
 
 import java.util.ArrayList;
 
-import Tagger.Tagger;
+import tagger.Tagger;
 
 /**
  * Adaptador entre el Parser del componente y el Tagger. Extiende Thread para poder independizarse de la

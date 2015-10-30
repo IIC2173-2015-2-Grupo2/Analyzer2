@@ -1,4 +1,4 @@
-package Tagger;
+package tagger;
 
 public class Tag {
 	

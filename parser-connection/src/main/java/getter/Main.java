@@ -1,11 +1,9 @@
-package Getter;
+package getter;
 
-
-import Saver.DatabaseManager;
 
 import static spark.Spark.*;
 
-
+import saver.DatabaseManager;
 import spark.*;
 
 public class Main{

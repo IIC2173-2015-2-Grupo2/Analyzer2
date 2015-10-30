@@ -1,4 +1,4 @@
-package Tagger;
+package tagger;
 
 
 import java.util.ArrayList;

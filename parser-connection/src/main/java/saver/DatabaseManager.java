@@ -1,4 +1,4 @@
-package Saver;
+package saver;
 
 /**
  * Contiene la información de login y conexión con la base de datos.

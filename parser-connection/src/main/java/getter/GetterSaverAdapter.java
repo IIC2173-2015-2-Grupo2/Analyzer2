@@ -1,9 +1,9 @@
-package Getter;
+package getter;
 
 
 import java.util.ArrayList;
 
-import Saver.NewsSaver;
+import saver.NewsSaver;
 
 /**
  * Adaptador entre el Parser del componente y el Saver. Extiende Thread para poder independizarse de las
