@@ -19,7 +19,7 @@ public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private String title, tags, header, date, url, imageUrl;
+	private String title, tags, header, date, url;
 	private final String port, host, password, user;
 
 	public NewsSaver(){

@@ -11,8 +11,6 @@ public class NewsParser {
 	private String newsToParse;
 	private ArrayList<String> forTagger;
 	private Lock parserLock;
-	private GetterTaggerAdapter getterTaggerAdapter;
-	private GetterSaverAdapter getterSaverAdapter;
 	private ArrayList<New> listAllNews;
 
 	public NewsParser(Lock l){
@@ -52,10 +50,10 @@ public class NewsParser {
 			forTagger.add(recentNew.getBody());
 		}
 
-		getterSaverAdapter = new GetterSaverAdapter(listAllNews);
+		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews);
 		getterSaverAdapter.start();
 
-		getterTaggerAdapter = new GetterTaggerAdapter(forTagger);
+		GetterTaggerAdapter getterTaggerAdapter = new GetterTaggerAdapter(forTagger);
 		getterTaggerAdapter.start();
 
 		parserLock.unlock();
