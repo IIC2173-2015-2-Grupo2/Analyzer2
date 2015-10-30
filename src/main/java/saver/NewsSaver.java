@@ -39,10 +39,10 @@ public class NewsSaver {
 		header = s[2];
 		url = s[3];
 		tags = s[4];
-		final String txUri = host + "transaction/commit";
+
+		final String txUri = "http://" + host + "/db/data/transaction/commit";
 		WebResource resource2 = Client.create().resource(txUri);
 		byte[] encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
-		System.out.println(port + " " + host + " " + password + " " + user);
 		//Creamos el nodo de la noticia
 		String newsItemCreator = "{\"statements\" : [ {\"statement\" : \"" +
 				"CREATE (n:"
