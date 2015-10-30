@@ -1,9 +1,9 @@
-package Getter;
+package getter;
 
 
 import java.util.ArrayList;
 
-import Saver.NewsSaver;
+import saver.NewsSaver;
 
 /**
  * Adaptador entre el Parser del componente y el Saver. Extiende Thread para poder independizarse de las
@@ -21,7 +21,7 @@ public class GetterSaverAdapter extends Thread{
 	public void run(){
 		saveNews();
 	}
-	
+
 	/**
 	 * Guarda, de a una, las noticias en la base de datos.
 	 */

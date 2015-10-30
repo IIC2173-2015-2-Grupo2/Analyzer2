@@ -1,10 +1,10 @@
-package Getter;
+package getter;
 
 
 
 import java.util.ArrayList;
 
-import Tagger.Tagger;
+import tagger.Tagger;
 
 /**
  * Adaptador entre el Parser del componente y el Tagger. Extiende Thread para poder independizarse de la
@@ -22,6 +22,7 @@ public class GetterTaggerAdapter extends Thread{
 	public void run(){
 		sendList();
 	}
+
 	/**
 	 * Envía la lista de cuerpos de noticia, una por una, al Tagger.
 	 */
