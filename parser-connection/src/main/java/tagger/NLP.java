@@ -11,17 +11,17 @@ import java.util.Set;
 
 
 
-public class NLP {
-	static ArrayList<String> importantWords;
-	static ArrayList<String> listText;
-	static ArrayList<String> repeatedWords;
-	static Map<String, Integer> wordCount;
+public abstract class NLP {
+	private static ArrayList<String> importantWords;
+	private static ArrayList<String> listText;
+	private static ArrayList<String> repeatedWords;
+	private static Map<String, Integer> wordCount;
 	public static  ArrayList<String> getTags(String text){
-
+		String innerText = text;
 		importantWords = new ArrayList<String>();
 		repeatedWords = new ArrayList<String>();
 		fillCapitalLetterWords(text);
-		text = text.toLowerCase();
+		innerText = innerText.toLowerCase();
 		String[] punctuation = {".", ",", ";", ":", "-", "_", "(", ")", "?", "¿", "!", "¡", "'", "<", ">"};
 		String[] articles = {"el", "la", "los", "las", "un", "unos", "una", "unas"};
 		String[] connectors = {"además","asímismo", "mismo modo", "misma manera", "igualmente", "también", "como", "debido",
@@ -39,15 +39,15 @@ public class NLP {
 				"acaso", "tal"};
 		String[] demonstratives = {"eso", "esto", "aquello", "ese", "este", "aquel", "esta", "esa", "aquella", "estos",
 				"esos", "aquellos", "estas", "esas", "aquellas" };
-		text.trim();
+		innerText.trim();
 
 		for (String word : punctuation) {
-			text = text.replace(word, "");
+			innerText = innerText.replace(word, "");
 		}
 
-		wordCount = findDuplicateString(text);
+		wordCount = findDuplicateString(innerText);
 
-		String[] arrayText = text.split(" ");
+		String[] arrayText = innerText.split(" ");
 		listText = new ArrayList<String>();
 
 		for (String word : arrayText) {
