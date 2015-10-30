@@ -1,11 +1,8 @@
 package Tagger;
 
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
 
 /* Básicamente el cuello de botella está en, al ver
  * cada palabra, ver si esta es tag o no, la revisión de si una 

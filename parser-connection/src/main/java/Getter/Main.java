@@ -2,12 +2,9 @@ package Getter;
 
 
 import Saver.DatabaseManager;
-import Tagger.Feed;
-import Tagger.Tagger;
 
 import static spark.Spark.*;
 
-import java.io.IOException;
 
 import spark.*;
 

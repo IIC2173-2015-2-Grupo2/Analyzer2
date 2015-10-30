@@ -190,12 +190,12 @@ public static String getGoogleTopCharts(int iyear,int imonth) throws IOException
 					trendingChart = chartList.getJSONObject(j).getJSONObject("topChart");
 				
 				
-				String category = trendingChart.getString("visibleName");
+//				String category = trendingChart.getString("visibleName");
 				
 				JSONArray entityList = trendingChart.getJSONArray("entityList");
 				
 				for(int k = 0 ; k < entityList.length() ; k++){
-					String keyword = entityList.getJSONObject(k).getString("title");
+//					String keyword = entityList.getJSONObject(k).getString("title");
 					//keywords.add( keyword + " :: " + category );
 					//keywords.add(keyword);
 				}

@@ -1,9 +1,7 @@
 package Getter;
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 
-import javax.xml.crypto.Data;
 
 import org.json.*;
 
@@ -20,7 +18,6 @@ public class NewsParser {
 	private GetterTaggerAdapter getterTaggerAdapter;
 	private GetterSaverAdapter getterSaverAdapter;
 	private ArrayList<New> listAllNews;
-	private int debuggerCounter;
 
 	public NewsParser(Lock l){
 		newsToParse = "";
@@ -45,10 +42,8 @@ public class NewsParser {
 	private void parseNews(){
 		listAllNews.clear();
 		forTagger.clear();
-		debuggerCounter = 0;
 		JSONArray allNews = new JSONArray(newsToParse); //ojo acá, puede que no lo tome como array
 		for (Object jsonObject : allNews) {
-			debuggerCounter++;
 			New recentNew = new New((String) ((JSONObject)jsonObject).get("title"),
 					(String) ((JSONObject)jsonObject).get("time"),
 					(String) ((JSONObject)jsonObject).get("header"),

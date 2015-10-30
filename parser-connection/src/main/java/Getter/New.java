@@ -1,6 +1,5 @@
 package Getter;
 
-import java.util.ArrayList;
 
 public class New {
 	private String title, date, header, body, url, tags;
