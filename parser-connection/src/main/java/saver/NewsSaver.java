@@ -33,6 +33,7 @@ public class NewsSaver {
 		password = System.getenv("NEO4J_PASS");
 		user = System.getenv("NEO4J_USER");
 	}
+	//comentario de prueba
 	/**
 	 * Encargado de guardar la distinta información en la base de datos
 	 * @param s Arreglo de información con estructura [título, fecha, bajada, url, tags]
