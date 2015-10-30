@@ -17,7 +17,8 @@ public class Tagger {
 	public static HashMap<String, Tag> existingTags;
 	public String[] tagNews(String body) throws Exception{
 		if(body == null || body.isEmpty()){
-			throw new Exception("empty body");
+			String[] emptyValue = {};
+			return emptyValue;
 		}
 
 
