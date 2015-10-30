@@ -12,6 +12,16 @@ export NEO4J_USER="neo4j"
 export NEO4J_PASS="neo4j"
 ```
 
+### Local
+Make sure you have Maven installed, then run:
+```sh
+# Install dependencies
+$ mvn install
+
+# Run
+$ mvn exec:java
+```
+
 ### Docker
 This image exposes port `4567`.
 

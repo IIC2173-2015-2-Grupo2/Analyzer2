@@ -12,7 +12,7 @@ EXEC = ./$(NAME)
 
 # Build docker image
 docker-build:
-	docker build --no-cache --rm -tag==$(NAME) .
+	docker build --no-cache --rm --tag=$(NAME) .
 
 # Start application on port 4567
 docker-run:

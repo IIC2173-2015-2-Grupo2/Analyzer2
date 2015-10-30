@@ -22,7 +22,7 @@
         <version>1.2.1</version>
         <configuration>
           <includePluginDependencies>true</includePluginDependencies>
-          <mainClass>Getter.Main</mainClass>
+          <mainClass>getter.Main</mainClass>
         </configuration>
       </plugin>
     </plugins>
