@@ -28,10 +28,10 @@ public class NewsSaver {
 	String title, tags, header, date, url, imageUrl;
 	final String port, host, password, user;
 	public NewsSaver(){
-		port = DatabaseManager.getPort();
-		host = DatabaseManager.getHost();
-		password = DatabaseManager.getPassword();
-		user = DatabaseManager.getUser();
+		port = System.getenv("NEO4J_PORT");
+		host = System.getenv("NEO4J_HOST");
+		password = System.getenv("NEO4J_PASS");
+		user = System.getenv("NEO4J_USER");
 	}
 	/**
 	 * Encargado de guardar la distinta información en la base de datos
@@ -43,22 +43,21 @@ public class NewsSaver {
 		header = s[2];
 		url = s[3];
 		tags = s[4];
-
 		final String txUri = host + "transaction/commit";
 		WebResource resource2 = Client.create().resource(txUri);	
 		byte[] encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
-		
+		System.out.println(port + " " + host + " " + password + " " + user);
 		//Creamos el nodo de la noticia
 		String newsItemCreator = "{\"statements\" : [ {\"statement\" : \"" +
 				"CREATE (n:" 
 				+ newsItemNodeLabel + " { " 
-				+ titleColumn + " : 'Test', " 
-				+ dateColumn + " : 'Tests', " 
-				+ headerColumn + "  : 'Test', " 
-				+ urlColumn + "  : 'Test' }) RETURN ID(n)" + 
+				+ titleColumn + " : '"+ title +"', "
+				+ dateColumn + " : '"+ date +"', "
+				+ headerColumn + "  : '"+ header +"', "
+				+ urlColumn + "  : '"+ url +"' }) RETURN ID(n)" +
 				"\"} ]}";
-		ClientResponse response2 = getClientResponse(resource2, newsItemCreator, encodedBytes);
-
+        ClientResponse response2 = getClientResponse(resource2, newsItemCreator, encodedBytes);
+        System.out.println(response2.toString());
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
@@ -74,7 +73,6 @@ public class NewsSaver {
 					"\"} ]}";
 			
 			ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
-
 			String tagItem = responseTag.getEntity(String.class);
 			int auxTagId = getIdFromJsonResult(tagItem);
 			responseTag.close();
@@ -90,6 +88,7 @@ public class NewsSaver {
 	}
 
 	private int getIdFromJsonResult(String result){
+        System.out.println("Getting id from result: " + result);
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
 				.getAsJsonObject()
