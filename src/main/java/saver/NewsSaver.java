@@ -18,10 +18,9 @@ public class NewsSaver {
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
 	private String title, header, date, url, image, fuente;
-	private final String port, host, password, user;
+	private final String host, password, user;
 
 	public NewsSaver(){
-		port = System.getenv("NEO4J_PORT");
 		host = System.getenv("NEO4J_HOST");
 		password = System.getenv("NEO4J_PASS");
 		user = System.getenv("NEO4J_USER");
