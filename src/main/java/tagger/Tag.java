@@ -1,40 +1,31 @@
 package tagger;
 
+
+
 public class Tag {
+	
+	public enum DataSetType {PEOPLE, PLACES, CATEGORIES, COMPANIES, OTHER}
+
+	
+
 
 	public static final int MIN_LEN_TAG = 4;
 
 	private String content;
-	private String startsWith;
-//	private int timesWasQueried;
-//	private int timesFound;
+	private DataSetType dataSet;
 
 
 
-	public Tag(String content){
-//		timesFound = 0;
-//		timesWasQueried = 0;
+
+	public Tag(String content, DataSetType dataSet){
+
 		this.content = content;
-		String[] words = content.split(" ");
-
-		String candidate = words[0];
-
-		int word_index = 1;
-
-		while(candidate.length() < MIN_LEN_TAG && word_index < words.length){
-			candidate += " " + words[word_index];
-		}
-
-		this.startsWith = candidate;
+		this.dataSet =  dataSet;
 
 	}
 
 	public String getContent(){
 		return this.content;
-	}
-
-	public String getStartsWith(){
-		return this.startsWith;
 	}
 
 //	public void queried(){
