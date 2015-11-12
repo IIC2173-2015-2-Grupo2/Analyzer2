@@ -5,6 +5,9 @@ import model.NewsItemData;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
+
+import java.util.Map.Entry;
+
 import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.Client;
@@ -39,7 +42,7 @@ public class NewsSaver {
 		String newsItemCreatorSuffix = "' }) RETURN ID(n)\"} ]}";
 		String newsItemCreatorBody = "";
 
-		for(Map.Entry<String, String> entry : data.getSetFields().entrySet()){
+		for(Entry<String, String> entry : data.getSetFields().entrySet()){
 			newsItemCreatorBody += entry.getKey() + ":" + entry.getValue();
     }
 

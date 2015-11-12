@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import org.json.*;
 
+import model.NewsItemData;
+
 /**
  * Clase encargada de sacar la información contenida en el JSON y enviarla a los distintos adaptadores.
  * @author estebandib
@@ -11,12 +13,12 @@ public class NewsParser {
 	private String newsToParse;
 	private ArrayList<String> forTagger;
 	private Lock parserLock;
-	private ArrayList<New> listAllNews;
+	private ArrayList<NewsItemData> listAllNews;
 
 	public NewsParser(Lock l){
 		newsToParse = "";
 		parserLock = l;
-		listAllNews = new ArrayList<New>();
+		listAllNews = new ArrayList<NewsItemData>();
 		forTagger = new ArrayList<String>();
 
 	}
@@ -31,7 +33,7 @@ public class NewsParser {
 	}
 
 	//Estructura del json
-	//{ [ {title=>"Titulo", time=>"yyyy-mm-dd hh:mm:ss", header=>"Descripcion", url=>"url a la pagina", body=>"todo el body de la noticia" tags: [ ]},{noticia2},... ] }
+	//{ [ {title=>"Titulo", time=>"yyyy-mm-dd hh:mm:ss", header=>"Descripcion", url=>"url a la pagina", imageUrl => "url de la imagen", source=> "fuente", body=>"todo el body de la noticia", tags: [ ], language: "sp o en"},{noticia2},... ] }
 	/**
 	 * Se encarga de obtener la información desde el JSON
 	 */
@@ -40,11 +42,14 @@ public class NewsParser {
 		forTagger.clear();
 		JSONArray allNews = new JSONArray(newsToParse); //ojo acá, puede que no lo tome como array
 		for (Object jsonObject : allNews) {
-			New recentNew = new New((String) ((JSONObject)jsonObject).get("title"),
+			NewsItemData recentNew = new NewsItemData((String) ((JSONObject)jsonObject).get("title"),
 					(String) ((JSONObject)jsonObject).get("time"),
 					(String) ((JSONObject)jsonObject).get("header"),
 					(String) ((JSONObject)jsonObject).get("body"),
 					(String) ((JSONObject)jsonObject).get("url"),
+					(String) ((JSONObject)jsonObject).get("imageUrl"),
+					(String) ((JSONObject)jsonObject).get("source"),
+					(String) ((JSONObject)jsonObject).get("language"),
 					(String) ((JSONObject)jsonObject).getJSONArray("tags").toString());
 			listAllNews.add(recentNew);
 			forTagger.add(recentNew.getBody());
