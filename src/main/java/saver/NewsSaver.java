@@ -1,5 +1,7 @@
 package saver;
 
+import model.NewsItemData;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
@@ -12,20 +14,11 @@ import com.sun.jersey.api.client.Client;
  * @author estebandib
  */
 public class NewsSaver {
-	private String titleColumn = "title";
-	private String dateColumn = "date";
-	private String headerColumn = "summary";
-	private String urlColumn = "url";
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private String title, tags, header, date, url;
+	private String title, tags, header, date, url, image, fuente;
 	private final String port, host, password, user;
-	public static final int TITLE_INDEX = 0;
-	public static final int DATE_INDEX = 1;
-	public static final int HEADER_INDEX = 2;
-	public static final int URL_INDEX = 3;
-	public static final int TAG_INDEX = 4;
 
 	public NewsSaver(){
 		port = System.getenv("NEO4J_PORT");
@@ -38,27 +31,22 @@ public class NewsSaver {
 	 * Encargado de guardar la distinta información en la base de datos
 	 * @param s Arreglo de información con estructura [título, fecha, bajada, url, tags]
 	 */
-	public void saveInDataBase(String[] data){
-		title = s[TITLE_INDEX];
-		date = s[DATE_INDEX];
-		header = s[HEADER_INDEX];
-		url = s[URL_INDEX];
-		tags = s[TAG_INDEX];
-
+	public void saveInDataBase(NewsItemData data){
 		final String txUri = "http://" + host + "/db/data/transaction/commit";
 		WebResource resource2 = Client.create().resource(txUri);
 		byte[] encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
 		//Creamos el nodo de la noticia
-		String newsItemCreator = "{\"statements\" : [ {\"statement\" : \"" +
-				"CREATE (n:"
-				+ newsItemNodeLabel + " { "
-				+ titleColumn + " : '"+ title +"', "
-				+ dateColumn + " : '"+ date +"', "
-				+ headerColumn + "  : '"+ header +"', "
-				+ urlColumn + "  : '"+ url +"' }) RETURN ID(n)" +
-				"\"} ]}";
-        ClientResponse response2 = getClientResponse(resource2, newsItemCreator, encodedBytes);
-        System.out.println(response2.toString());
+		String newsItemCreatorPrefix = "{\"statements\" : [ {\"statement\" : \"CREATE (n:" + newsItemNodeLabel + " { ";
+		String newsItemCreatorSuffix = "' }) RETURN ID(n)\"} ]}";
+		String newsItemCreatorBody = "";
+
+		for(Map.Entry<String, String> entry : data.getSetFields().entrySet()){
+			newsItemCreatorBody += entry.getKey() + ":" + entry.getValue();
+    }
+
+		String newsItemCreatorString = newsItemCreatorPrefix + newsItemCreatorBody + newsItemCreatorSuffix;
+
+		ClientResponse response2 = getClientResponse(resource2, newsItemCreatorString, encodedBytes);
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
