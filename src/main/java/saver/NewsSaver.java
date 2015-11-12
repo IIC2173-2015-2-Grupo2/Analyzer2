@@ -53,7 +53,6 @@ public class NewsSaver {
 				+ urlColumn + "  : '"+ url +"' }) RETURN ID(n)" +
 				"\"} ]}";
         ClientResponse response2 = getClientResponse(resource2, newsItemCreator, encodedBytes);
-        System.out.println(response2.toString());
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
@@ -84,7 +83,6 @@ public class NewsSaver {
 	}
 
 	private int getIdFromJsonResult(String result){
-        System.out.println("Getting id from result: " + result);
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
 				.getAsJsonObject()

@@ -60,11 +60,9 @@ public class Tagger {
 		String[] output = new String[arrlst.size()];
 
 
-		System.out.println("for the news: " + body.substring(0, 20) + "... the following tags where  assigned: ");
 
 		int i = 0;
 		for (String tag : arrlst) {
-			System.out.println(tag);
 			output[i] = tag;
 			i++;
 		}
