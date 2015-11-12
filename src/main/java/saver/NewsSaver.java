@@ -17,7 +17,7 @@ public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private String title, tags, header, date, url, image, fuente;
+	private String title, header, date, url, image, fuente;
 	private final String port, host, password, user;
 
 	public NewsSaver(){
@@ -29,7 +29,7 @@ public class NewsSaver {
 
 	/**
 	 * Encargado de guardar la distinta información en la base de datos
-	 * @param s Arreglo de información con estructura [título, fecha, bajada, url, tags]
+	 * @param s NewsItemData de información con estructura [título, fecha, bajada, url, tags, entre otros]
 	 */
 	public void saveInDataBase(NewsItemData data){
 		final String txUri = "http://" + host + "/db/data/transaction/commit";
@@ -52,7 +52,7 @@ public class NewsSaver {
 		response2.close();
 
 		//Creamos los nodos de los tags y sus relaciones
-		String[] sepTags = tags.split(",");
+		String[] sepTags = data.getTags().split(",");
 		for (int i = 0; i < sepTags.length; i++) {
 			String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
 					"MERGE (n:"
@@ -77,7 +77,6 @@ public class NewsSaver {
 	}
 
 	private int getIdFromJsonResult(String result){
-        System.out.println("Getting id from result: " + result);
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
 				.getAsJsonObject()

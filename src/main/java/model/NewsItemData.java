@@ -10,6 +10,7 @@ public class NewsItemData {
     public static String imageColumn = "image";
     public static String sourceColumn = "source";
     private HashMap<String, String> setFields;
+		private String[] tags;
 
     public NewsItemData(){
         setFields = new HashMap<>();
@@ -48,4 +49,12 @@ public class NewsItemData {
 			if(source.equals("null") == false)
         setFields.put(sourceColumn, source);
     }
+
+		public void setTags(String[] tags){
+			this.tags = tags;
+		}
+
+		public String[] getTags(){
+			return tags;
+		}
 }

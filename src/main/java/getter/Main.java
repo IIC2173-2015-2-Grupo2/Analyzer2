@@ -50,7 +50,6 @@ public class Main{
 	 */
 	public static Response processPost(Request request, Response response){
 		NewArrivalHandler nah = new NewArrivalHandler();
-		System.out.println(request.body().toString());
 		nah.newArrival(request.body());
 		return response;
 	}
