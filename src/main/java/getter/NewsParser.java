@@ -1,6 +1,8 @@
 package getter;
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
+
+import org.eclipse.jetty.util.log.Log;
 import org.json.*;
 
 import model.NewsItemData;
@@ -29,10 +31,16 @@ public class NewsParser {
 	 */
 	public void newArrival(String s){
 		newsToParse = s;
-		parseNews();
+		try {
+			parseNews();
+		} catch (Exception e) {
+
+		}
+
 	}
 
-	//Estructura del json
+
+	//Estructura del json language: sp o en
 	//{ [ {title=>"Titulo", time=>"yyyy-mm-dd hh:mm:ss", header=>"Descripcion", url=>"url a la pagina", imageUrl => "url de la imagen", source=> "fuente", body=>"todo el body de la noticia", tags: [ ], language: "sp o en"},{noticia2},... ] }
 	/**
 	 * Se encarga de obtener la información desde el JSON

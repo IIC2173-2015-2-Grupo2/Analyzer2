@@ -39,7 +39,7 @@ public class Main{
 			e.printStackTrace();
 		}
 		*/
-		post("/", (request, response) -> /*processPost(request, response)*/{
+		post("/", (request, response) -> {
 			NewArrivalHandler nah = new NewArrivalHandler();
 			nah.newArrival(request.body());
 			return response;
