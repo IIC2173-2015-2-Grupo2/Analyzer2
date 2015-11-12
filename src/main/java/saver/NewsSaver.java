@@ -14,13 +14,18 @@ import com.sun.jersey.api.client.Client;
 public class NewsSaver {
 	private String titleColumn = "title";
 	private String dateColumn = "date";
-	private String headerColumn = "header";
+	private String headerColumn = "summary";
 	private String urlColumn = "url";
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
 	private String title, tags, header, date, url;
 	private final String port, host, password, user;
+	public static final int TITLE_INDEX = 0;
+	public static final int DATE_INDEX = 1;
+	public static final int HEADER_INDEX = 2;
+	public static final int URL_INDEX = 3;
+	public static final int TAG_INDEX = 4;
 
 	public NewsSaver(){
 		port = System.getenv("NEO4J_PORT");
@@ -33,12 +38,12 @@ public class NewsSaver {
 	 * Encargado de guardar la distinta información en la base de datos
 	 * @param s Arreglo de información con estructura [título, fecha, bajada, url, tags]
 	 */
-	public void saveInDataBase(String[] s){
-		title = s[0];
-		date = s[1];
-		header = s[2];
-		url = s[3];
-		tags = s[4];
+	public void saveInDataBase(String[] data){
+		title = s[TITLE_INDEX];
+		date = s[DATE_INDEX];
+		header = s[HEADER_INDEX];
+		url = s[URL_INDEX];
+		tags = s[TAG_INDEX];
 
 		final String txUri = "http://" + host + "/db/data/transaction/commit";
 		WebResource resource2 = Client.create().resource(txUri);
