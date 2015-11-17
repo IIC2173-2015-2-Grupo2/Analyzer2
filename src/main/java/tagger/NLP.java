@@ -14,38 +14,38 @@ public abstract class NLP {
 	private static ArrayList<String> repeatedWords;
 	private static Map<String, Integer> wordCount;
 	private static String language;
-	public static  ArrayList<String> getTags(String text){
+	public static  ArrayList<String> getTags(String text, String lan){
 		String innerText = text;
-		language = "sp"; //Cambiar para soportar inglés
+		language = lan;
 		capitalLetterWords = new ArrayList<String>();
 		repeatedWords = new ArrayList<String>();
+		
+		//Llenamos la lista de las palabras con mayúsculas
 		fillCapitalLetterWords(text);
 		innerText = innerText.toLowerCase();
+		
+		//Borramos la puntuación (es independiente del lenguaje)
 		String[] punctuation = {".", ",", ";", ":", "-", "_", "(", ")", "?", "¿", "!", "¡", "'", "<", ">"};	
 		for (String word : punctuation) {
-			innerText = innerText.replaceAll(word, "");
+			innerText = innerText.replace(word, "");
 		}
 		innerText = innerText.trim();
-
+		
+		//Contamos las palabras repetidas
 		wordCount = findDuplicateString(innerText);
 
-		String[] arrayText = innerText.split(" ");
-		listText = new ArrayList<String>();
-
-		for (String word : arrayText) {
-			listText.add(word);
-		}
+		//Borramos las palabras "basura" (dependiendo el lenguaje)
 		deleteWords();
 
-		for (String word : listText) {
-			if(wordCount.containsKey(word)){
+		//Añadimos las palabras que se repiten 2 o más veces
+		for (String word : wordCount.keySet()) {
 				int times = wordCount.get(word);
 				if(times >= 2){
 					repeatedWords.add(word);
 				}
 			}
-		}
 
+		//Añadimos las palabras con mayúsculas y las palabras repetidas al output y lo retornamos
 		ArrayList<String> outputWords = new ArrayList<String>();
 		outputWords.addAll(repeatedWords);
 		outputWords.addAll(capitalLetterWords);
@@ -64,6 +64,9 @@ public abstract class NLP {
 //		return tagList;
 //	}
 	
+	/**
+	 * Borra las palabras dependiendo el idioma
+	 */
 	private static void deleteWords(){
 		if(language == "sp"){
 			deleteSpanishWords();
@@ -72,6 +75,10 @@ public abstract class NLP {
 			deleteEnglishWords();
 		}
 	}
+	
+	/**
+	 * Borra palabras en inglés
+	 */
 	private static void deleteEnglishWords(){
 		String[] articles = {"the", "a", "an", "some"};
 		String[] connectors = {"however", "in", "contrast", "nevertheless", "nonetheless", "yet", "on", "other", "by", "comparison",
@@ -119,6 +126,10 @@ public abstract class NLP {
 		deleteFromMap(adverbs);
 		deleteFromMap(demonstratives);
 	}
+	
+	/**
+	 * Borra palabras en español
+	 */
 	private static void deleteSpanishWords(){
 		String[] articles = {"el", "la", "los", "las", "un", "unos", "una", "unas"};
 		String[] connectors = {"además","asímismo", "mismo modo", "misma manera", "igualmente", "también", "como", "debido",
@@ -145,6 +156,10 @@ public abstract class NLP {
 		deleteFromMap(demonstratives);
 	}
 
+	/**
+	 * Elimina palabras de las key de un Map
+	 * @param wordsToDelete set de palabras que se quieren eliminar
+	 */
 	private static void deleteFromMap(String[] wordsToDelete){
 		for (String word : wordsToDelete) {
 			if(wordCount.containsKey(word)){
@@ -153,6 +168,10 @@ public abstract class NLP {
 		}
 	}
 
+	/**
+	 * Toma las palabras en mayúscula y añade a capitalLetterWords
+	 * @param text texto que se quiere analizar en busca de palabras en mayúscula
+	 */
 	private static void fillCapitalLetterWords(String text){
 		String[] words = text.split(" ");
 		boolean lastWasCapital = false;
@@ -168,12 +187,18 @@ public abstract class NLP {
 			else {
 				lastWasCapital = false;
 			}
-			if (!temp.equals("") && !temp.equals("I")){
+			if (!temp.equals("") && !temp.equals("I") && !lastWasCapital){
 				capitalLetterWords.add(temp);
+				temp = "";
 			}
 		}
 	}
-
+	
+	/**
+	 * Analiza un texto y determina cuantas veces se repiten las palabras. Pone la informacion en un Map
+	 * @param str texto que se quiere analizar en busca de palabras repetidas
+	 * @return Map con key = palabra y value = número de repeticiones de la palabra
+	 */
 	private static Map<String, Integer> findDuplicateString(String str) {
 		String[] stringArrays = str.split(" ");
 		Map<String, Integer> map = new HashMap<String, Integer>();

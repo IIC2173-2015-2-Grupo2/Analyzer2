@@ -64,7 +64,8 @@ public class Tagger {
 		String[] _companies = {"Google", "Amazon", "Electronic Arts", "Ubisoft", "Zinga",
 				"Clash of Clans' creator", "Candy Crush's creator", "Valve", "OMGPop",
 				"Dropbox", "Sony", "LG", "Los Pollos Hermanos", "Facebook", "Twitter",
-				"Manga Corta", "Netflix", "ArquiNews", "Smartboard", "Microsoft", "Apple"};		for(int i = 0 ; i < _companies.length ; i++){
+				"Manga Corta", "Netflix", "ArquiNews", "Smartboard", "Microsoft", "Apple"};		
+		for(int i = 0 ; i < _companies.length ; i++){
 			companies.add(_companies[i]);
 		}
 	}
@@ -79,7 +80,7 @@ public class Tagger {
 
 
 
-		ArrayList<String> arrlst = NLP.getTags(body);
+		ArrayList<String> arrlst = NLP.getTags(body.split(",")[0], body.split(",")[1]);
 		
 		
 		

@@ -49,5 +49,15 @@ public class NewsItemData {
 	public String getTags() {
 		return setFields.get("tags");
 	}
+	public String getLanguage(){
+		return setFields.get("language");
+	}
+	@Override
+	public String toString(){
+		return "Title: " + setFields.get("title") + "\ndate: " + setFields.get("date") + "\nsummary: " + setFields.get("summary") + 
+				"\nbody: " + setFields.get("body") + "\nurl: " + setFields.get("url") + "\nimage: " + setFields.get("image") +
+				"\nsource: " + setFields.get("source") + "\nlanguage: " + setFields.get("language") + "\ntags: " + tags;
+	}
+
 
 }
