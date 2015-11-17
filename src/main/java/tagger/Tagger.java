@@ -80,9 +80,11 @@ public class Tagger {
 
 
 
-		ArrayList<String> arrlst = NLP.getTags(body.split(",")[0], body.split(",")[1]);
+		ArrayList<String> arrlst = NLP.getTags(body.split("ç")[0], body.split("ç")[1]);
 		
-		
+		for (String string : arrlst) {
+			System.out.println(string + "\n");
+		}
 		
 		
 		
@@ -105,7 +107,7 @@ public class Tagger {
 			
 			output[i] = new Tag(tag, dataSet);
 		}
-
+		
 
 		return output;
 	}

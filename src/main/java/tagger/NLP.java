@@ -10,7 +10,6 @@ import java.util.Set;
 
 public abstract class NLP {
 	private static ArrayList<String> capitalLetterWords;
-	private static ArrayList<String> listText;
 	private static ArrayList<String> repeatedWords;
 	private static Map<String, Integer> wordCount;
 	private static String language;
@@ -39,11 +38,12 @@ public abstract class NLP {
 
 		//Añadimos las palabras que se repiten 2 o más veces
 		for (String word : wordCount.keySet()) {
-				int times = wordCount.get(word);
-				if(times >= 2){
-					repeatedWords.add(word);
-				}
+			int times = wordCount.get(word);
+			if(times >= 2){
+				repeatedWords.add(word);
 			}
+		}
+		
 
 		//Añadimos las palabras con mayúsculas y las palabras repetidas al output y lo retornamos
 		ArrayList<String> outputWords = new ArrayList<String>();
@@ -68,10 +68,10 @@ public abstract class NLP {
 	 * Borra las palabras dependiendo el idioma
 	 */
 	private static void deleteWords(){
-		if(language == "sp"){
+		if(language.equals("sp")){
 			deleteSpanishWords();
 		}
-		else if (language == "en") {
+		else if (language.equals("en")) {
 			deleteEnglishWords();
 		}
 	}
@@ -80,8 +80,8 @@ public abstract class NLP {
 	 * Borra palabras en inglés
 	 */
 	private static void deleteEnglishWords(){
-		String[] articles = {"the", "a", "an", "some"};
-		String[] connectors = {"however", "in", "contrast", "nevertheless", "nonetheless", "yet", "on", "other", "by", "comparison",
+		String[] articles = {"the", "a", "an", "some", "is"};
+		String[] connectors = {"and", "however", "in", "contrast", "nevertheless", "nonetheless", "yet", "on", "other", "by", "comparison",
 				"contrary", "instead", "any", "case", "all", "same", "likewise", "similarly", "correspondingly", "way", "also", "as",
 				"therefore", "thus", "accordingly", "first", "firstly", "for", "thing", "begin", "with", "without",
 				"second", "secondly", "third", "thridly", "fourth", "foruthly", "fifth", "also", "besides", "addition", "furthermore",
@@ -89,12 +89,12 @@ public abstract class NLP {
 				"essentially", "basically", "particular", "particularly", "specifically", "example", "instance", "illustrat",
 				"say", "namely", "differently", "put", "matter", "fact", "actually", "indeed", "as", "regard", "to", "regards",
 				"concerned", "conclusion", "brief", "summary", "up", "down", "rather", "precise", "afterwards", "later",
-				"meantime", "meanwhile", "anyway", "anyhow", "any", "rate", "therefore", "thus"};
+				"meantime", "meanwhile", "anyway", "anyhow", "any", "rate", "therefore", "thus", "after"};
 		String[] personalPronouns = {"I", "me", "mine", "myself", "my", "you", "your", "yours", "yourself", "he", "him", "his", "himself",
 				"she", "her", "hers", "herself", "it", "its", "itself", "we", "us", "our", "ours", "ourselves", "you", "your", "yours", 
 				"yourself", "yourselves", "they", "them", "their", "theirs", "themselves", "thou", "thee", "thy", "thine", "thyself",
 				"who", "whom", "whomself", "whoself", "whose"};
-		String[] extras = {"there", "when", "how", "so", "up", "out", "no", "only", "well", "then", "where",
+		String[] extras = {"los", "faced", "take", "In", "final", "title", "there", "when", "how", "so", "up", "out", "no", "only", "well", "then", "where",
 				"why", "now", "around", "once", "down", "here", "tonight", "away", "today", "far", "quite", "later", "above", "yet", "maybe", "otherwise",
 				"near", "forward", "somewhere", "anywhere", "please", "forever", "somehow", "absolutely", "abroad", "yeah", "nowhere", "tomorrow", "yesterday",
 				"more", "about", "such", "through", "new", "just", "any", "each", "much", "before", "between", "free", "right", "best", "since",
@@ -106,7 +106,7 @@ public abstract class NLP {
 		String[] preposicions = {"on", "at", "in", "since", "for", "ago", "before", "to", "past", "to", "till", "until", "by", "next",
 				"to", "beside", "under", "below", "over", "above", "across", "through", "into", "towards", "onto", "from", "of", "off",
 				"out", "about"};
-		String[] adverbs = {"not", "also", "often", "too", "usually", "really", "early", "never", "always", "sometimes", "together", "likely",
+		String[] adverbs = {"was", "not", "also", "often", "too", "usually", "really", "early", "never", "always", "sometimes", "together", "likely",
 				"simply", "generally", "instead", "actually", "again", "rather", "almost", "especially", "ever", "quickly", "probably",
 				"already", "below", "directly", "else", "if", "easily", "eventually", "exactly", "certainly", "normally", "currently",
 				"extremely", "finally", "constantly", "properly", "soon", "specifically", "ahead", "daily", "highly", "inmidiately",
@@ -145,7 +145,7 @@ public abstract class NLP {
 				"despacio", "mejor", "peor", "igual", "similar", "fácilmente", "difícilmente", "así", "naturalmente","muy",
 				"más", "poco", "bastante", "demasiado", "menos", "mucho", "algo", "casi", "sólo", "nada", "quizás",
 				"acaso", "tal"};
-		String[] demonstratives = {"eso", "esto", "aquello", "ese", "este", "aquel", "esta", "esa", "aquella", "estos",
+		String[] demonstratives = {"es", "son", "somos", "eso", "esto", "aquello", "ese", "este", "aquel", "esta", "esa", "aquella", "estos",
 				"esos", "aquellos", "estas", "esas", "aquellas" };
 		deleteFromMap(articles);
 		deleteFromMap(personalPronouns);
@@ -161,7 +161,7 @@ public abstract class NLP {
 	 * @param wordsToDelete set de palabras que se quieren eliminar
 	 */
 	private static void deleteFromMap(String[] wordsToDelete){
-		for (String word : wordsToDelete) {
+		for (String word : wordsToDelete){
 			if(wordCount.containsKey(word)){
 				wordCount.remove(word);
 			}

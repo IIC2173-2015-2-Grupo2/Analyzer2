@@ -60,7 +60,7 @@ public class NewsParser {
 					(String) ((JSONObject)jsonObject).get("language"),
 					(String) ((JSONObject)jsonObject).getJSONArray("tags").toString());
 			listAllNews.add(recentNew);
-			forTagger.add(recentNew.getBody() + "," + recentNew.getLanguage());
+			forTagger.add(recentNew.getBody() + "ç" + recentNew.getLanguage());
 		}
 
 		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews);
