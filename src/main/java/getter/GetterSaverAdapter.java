@@ -18,9 +18,9 @@ public class GetterSaverAdapter extends Thread{
 	private NewsSaver newsSaver;
 	private DebuggerNewsSaver debuggerNewsSaver;
 	public GetterSaverAdapter(ArrayList<NewsItemData> allNews){
-		newsSaver = new NewsSaver();
+		//newsSaver = new NewsSaver();
 		//usado para debuggear
-		//debuggerNewsSaver = new DebuggerNewsSaver();
+		debuggerNewsSaver = new DebuggerNewsSaver();
 		toProcess = allNews;
 	}
 	public void run(){
@@ -32,9 +32,9 @@ public class GetterSaverAdapter extends Thread{
 	 */
 	private void saveNews(){
 		for (NewsItemData newItem : toProcess){
-			newsSaver.saveInDataBase(newItem);
+			//newsSaver.saveInDataBase(newItem);
 			//usado para debuggear
-			//debuggerNewsSaver.saveInDatabase(newItem);
+			debuggerNewsSaver.saveInDatabase(newItem);
 		}
 	}
 }
