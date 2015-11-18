@@ -34,8 +34,10 @@ public class NewsItemData {
             setFields.put(sourceColumn, source);
         if(!language.equals("null"))
             setFields.put(languageColumn, language);
-        if(!language.equals(""))
-            setFields.put(tagsColumn, tags);
+       /* if(!language.equals(""))
+            setFields.put(tagsColumn, tags);*/
+        if(!tags.equals("null"))
+        	this.tags = tags;
     }
 
 	public HashMap<String, String> getSetFields() {
@@ -47,7 +49,7 @@ public class NewsItemData {
 	}
 
 	public String getTags() {
-		return setFields.get("tags");
+		return tags;
 	}
 	public String getLanguage(){
 		return setFields.get("language");
