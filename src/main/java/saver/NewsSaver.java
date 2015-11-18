@@ -23,13 +23,10 @@ public class NewsSaver {
 	private String title, header, date, url, image, fuente;
 	private final String host, password, user;
 
-	public NewsSaver(){/*
+	public NewsSaver(){
 		host = System.getenv("NEO4J_HOST");
 		password = System.getenv("NEO4J_PASS");
-		user = System.getenv("NEO4J_USER");*/
-		host = "arqui7.ing.puc.cl";
-		password = "7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df";
-		user = "neo4j";
+		user = System.getenv("NEO4J_USER");
 	}
 
 	/**
