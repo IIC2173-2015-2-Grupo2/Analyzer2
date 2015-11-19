@@ -17,17 +17,17 @@ import tagger.Tag.DataSetType;
 
 
 public class Tagger {
-	
+
 
 	public static HashMap<String, Tag> existingTags;
-	
+
 	private static HashSet<String> people;
 	private static HashSet<String> places;
 	private static HashSet<String> categories;
 	private static HashSet<String> companies;
-	
+
 	public Tagger(){
-		
+
 		people = new HashSet<String>();
 		String[] _people = {"Steelback", "Febiven", "YellOwStar", "Reignover", "Huni",
 				"Jack", "Hai", "Charlie", "LemonNation", "Bubbadub", "Aconr", "TBQ",
@@ -38,8 +38,8 @@ public class Tagger {
 		for(int i = 0 ; i < _people.length ; i++){
 			people.add(_people[i]);
 		}
-		
-		
+
+
 		places = new HashSet<String>();
 		String[] _places = {"Paris", "Berlin", "Los Angeles", "Shanghai", "London",
 				"Santiago", "Talca", "Buenos Aires", "New York", "Madrid", "Moscow",
@@ -49,49 +49,42 @@ public class Tagger {
 		for(int i = 0 ; i < _places.length ; i++){
 			places.add(_places[i]);
 		}
-		
-		
+
+
 		categories = new HashSet<String>();
 		String[] _categories= {"Technology", "ES", "Games", "Entertainment",
 				"Criminal", "Illegal", "World", "Police", "Technology",
-				"World Domination"};		
+				"World Domination"};
 		for(int i = 0 ; i < _categories.length ; i++){
 			categories.add(_categories[i]);
 		}
 
-		
+
 		companies = new HashSet<String>();
 		String[] _companies = {"Google", "Amazon", "Electronic Arts", "Ubisoft", "Zinga",
 				"Clash of Clans' creator", "Candy Crush's creator", "Valve", "OMGPop",
 				"Dropbox", "Sony", "LG", "Los Pollos Hermanos", "Facebook", "Twitter",
-				"Manga Corta", "Netflix", "ArquiNews", "Smartboard", "Microsoft", "Apple"};		
+				"Manga Corta", "Netflix", "ArquiNews", "Smartboard", "Microsoft", "Apple"};
 		for(int i = 0 ; i < _companies.length ; i++){
 			companies.add(_companies[i]);
 		}
 	}
 
-	
-	
+
+
 	public Tag[] tagNews(String body) throws Exception{
-		
+
 		if(body == null || body.isEmpty()){
 			return null;
 		}
 
-
-
 		ArrayList<String> arrlst = NLP.getTags(body.split(",")[0], body.split(",")[1]);
-		
-		
-		
-		
-		
-		Tag[] output = new Tag[arrlst.size()];		
-		
+		Tag[] output = new Tag[arrlst.size()];
+
 		for (int i = 0 ; i < arrlst.size() ; i++) {
 			String tag = arrlst.get(i);
 			DataSetType dataSet = null;
-			
+
 			if(people.contains(tag))
 				dataSet = DataSetType.PEOPLE;
 			else if(places.contains(tag))
@@ -102,7 +95,7 @@ public class Tagger {
 				dataSet = DataSetType.COMPANIES;
 			else
 				dataSet = DataSetType.OTHER;
-			
+
 			output[i] = new Tag(tag, dataSet);
 		}
 
