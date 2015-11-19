@@ -5,6 +5,9 @@ import model.NewsItemData;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
+
+import java.util.Map.Entry;
+
 import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonParser;
 import com.sun.jersey.api.client.Client;
@@ -36,13 +39,13 @@ public class NewsSaver {
 		byte[] encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
 		//Creamos el nodo de la noticia
 		String newsItemCreatorPrefix = "{\"statements\" : [ {\"statement\" : \"CREATE (n:" + newsItemNodeLabel + " { ";
-		String newsItemCreatorSuffix = "' }) RETURN ID(n)\"} ]}";
+		String newsItemCreatorSuffix = " }) RETURN ID(n)\"} ]}";
 		String newsItemCreatorBody = "";
 
-		for(Map.Entry<String, String> entry : data.getSetFields().entrySet()){
-			newsItemCreatorBody += entry.getKey() + ":" + entry.getValue();
-    }
-
+		for(Entry<String, String> entry : data.getSetFields().entrySet()){
+			newsItemCreatorBody += entry.getKey() + ":'" + entry.getValue() + "',";
+		}
+		newsItemCreatorBody = newsItemCreatorBody.substring(0, newsItemCreatorBody.length() - 1);
 		String newsItemCreatorString = newsItemCreatorPrefix + newsItemCreatorBody + newsItemCreatorSuffix;
 
 		ClientResponse response2 = getClientResponse(resource2, newsItemCreatorString, encodedBytes);
@@ -51,27 +54,29 @@ public class NewsSaver {
 		response2.close();
 
 		//Creamos los nodos de los tags y sus relaciones
-		String[] sepTags = data.getTags().split(",");
-		for (int i = 0; i < sepTags.length; i++) {
-			String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
-					"MERGE (n:"
-					+ tagNodeLabel + " { "
-					+ nameColumn + "  : '"
-					+ sepTags[i] + "' }) RETURN ID(n)" +
-					"\"} ]}";
+		if(data.getTags() != null){
+			String[] sepTags = data.getTags().split(",");
+			for (int i = 0; i < sepTags.length; i++) {
+				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
+						"MERGE (n:"
+						+ tagNodeLabel + " { "
+						+ nameColumn + "  : '"
+						+ sepTags[i] + "' }) RETURN ID(n)" +
+						"\"} ]}";
 
-			ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
-			String tagItem = responseTag.getEntity(String.class);
-			int auxTagId = getIdFromJsonResult(tagItem);
-			responseTag.close();
+				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
+				String tagItem = responseTag.getEntity(String.class);
+				int auxTagId = getIdFromJsonResult(tagItem);
+				responseTag.close();
 
-			String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
-					+ "MATCH (a:NewsItem),(b:Tag) "
-					+ "WHERE ID(a) = %d AND ID(b) = %d "
-					+ "CREATE (b)-[r:`is in `]->(a)\"} ]}", newsItemId, auxTagId);
+				String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
+						+ "MATCH (a:NewsItem),(b:Tag) "
+						+ "WHERE ID(a) = %d AND ID(b) = %d "
+						+ "CREATE (b)-[r:`is in `]->(a)\"} ]}", newsItemId, auxTagId);
 
-			ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
-			relationTag.close();
+				ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
+				relationTag.close();
+			}
 		}
 	}
 

@@ -3,6 +3,9 @@ package tagger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+
+import tagger.Tag.DataSetType;
 
 /* Básicamente el cuello de botella está en, al ver
  * cada palabra, ver si esta es tag o no, la revisión de si una
@@ -12,74 +15,101 @@ import java.util.HashMap;
  * */
 
 
+
 public class Tagger {
+	
 
 	public static HashMap<String, Tag> existingTags;
-	public String[] tagNews(String body) throws Exception{
+	
+	private static HashSet<String> people;
+	private static HashSet<String> places;
+	private static HashSet<String> categories;
+	private static HashSet<String> companies;
+	
+	public Tagger(){
+		
+		people = new HashSet<String>();
+		String[] _people = {"Steelback", "Febiven", "YellOwStar", "Reignover", "Huni",
+				"Jack", "Hai", "Charlie", "LemonNation", "Bubbadub", "Aconr", "TBQ",
+				"GODV", "imp", "Pyl", "Gandalf", "Putin", "Obama", "Merkel",
+				"Artyom Lesnitsky Oktyabrskaya", "Trump", "Tim Cook", "Emma Watson",
+				"Tsipras", "Xi Jinping", "Hillary Clinton", "Netanyahu", "Jack Black",
+				"Chewbacca", "PewDiePie"};
+		for(int i = 0 ; i < _people.length ; i++){
+			people.add(_people[i]);
+		}
+		
+		
+		places = new HashSet<String>();
+		String[] _places = {"Paris", "Berlin", "Los Angeles", "Shanghai", "London",
+				"Santiago", "Talca", "Buenos Aires", "New York", "Madrid", "Moscow",
+				"Zagreb", "King's Landing", "Winterfell", "Mordor", "the world", "Chile",
+				"USA", "the UK", "Germany", "Uganda", "Ireland", "France", "Mexico",
+				"El Salvador", "Australia", "Vatican City", "Mordor", "King's Landing"};
+		for(int i = 0 ; i < _places.length ; i++){
+			places.add(_places[i]);
+		}
+		
+		
+		categories = new HashSet<String>();
+		String[] _categories= {"Technology", "ES", "Games", "Entertainment",
+				"Criminal", "Illegal", "World", "Police", "Technology",
+				"World Domination"};		
+		for(int i = 0 ; i < _categories.length ; i++){
+			categories.add(_categories[i]);
+		}
+
+		
+		companies = new HashSet<String>();
+		String[] _companies = {"Google", "Amazon", "Electronic Arts", "Ubisoft", "Zinga",
+				"Clash of Clans' creator", "Candy Crush's creator", "Valve", "OMGPop",
+				"Dropbox", "Sony", "LG", "Los Pollos Hermanos", "Facebook", "Twitter",
+				"Manga Corta", "Netflix", "ArquiNews", "Smartboard", "Microsoft", "Apple"};		
+		for(int i = 0 ; i < _companies.length ; i++){
+			companies.add(_companies[i]);
+		}
+	}
+
+	
+	
+	public Tag[] tagNews(String body) throws Exception{
+		
 		if(body == null || body.isEmpty()){
-			String[] emptyValue = {};
-			return emptyValue;
+			return null;
 		}
 
 
-		/*
-		ArrayList<String> tags = new ArrayList<String>();
-		Scanner sc = new Scanner(body);
 
-		String token = sc.next();
-
-
-		/*
-		while(sc.hasNext()){
-			while(token.length() < Tag.MIN_LEN_TAG && sc.hasNext()){
-				token += " " + sc.next();
-			}
-
-			String tagCandidate = mayBeTag(token);
-			while(token.length() < tagCandidate.length() - 1){
-				token += " " + sc.next();
-			}
-
-
-			if(token.equalsIgnoreCase(tagCandidate)){
-				tags.add(tagCandidate);
-
-			}
-		}
-		sc.close();
-		*/
-
-		//System.out.println("for the news: " + body.substring(0, 20) + "... the following tags where  assigned: ");
-		/*
-		for (String tag : tags) {
-			System.out.println(tag);
-		}
-		*/
-
-		ArrayList<String> arrlst = NLP.getTags(body);
-		String[] output = new String[arrlst.size()];
-
-
-
-		int i = 0;
-		for (String tag : arrlst) {
-			output[i] = tag;
-			i++;
+		ArrayList<String> arrlst = NLP.getTags(body.split(",")[0], body.split(",")[1]);
+		
+		
+		
+		
+		
+		Tag[] output = new Tag[arrlst.size()];		
+		
+		for (int i = 0 ; i < arrlst.size() ; i++) {
+			String tag = arrlst.get(i);
+			DataSetType dataSet = null;
+			
+			if(people.contains(tag))
+				dataSet = DataSetType.PEOPLE;
+			else if(places.contains(tag))
+				dataSet = DataSetType.PLACES;
+			else if(categories.contains(tag))
+				dataSet = DataSetType.CATEGORIES;
+			else if(companies.contains(tag))
+				dataSet = DataSetType.COMPANIES;
+			else
+				dataSet = DataSetType.OTHER;
+			
+			output[i] = new Tag(tag, dataSet);
 		}
 
 
 		return output;
 	}
 
-	public static void addTag(String tagName){
-
-		if(existingTags == null){
-			existingTags = new HashMap<String, Tag>();
-		}
-
-		Tag t = new Tag(tagName);
-		existingTags.put(t.getStartsWith(), t);
-	}
 
 	public static  String mayBeTag(String token){
 		return existingTags.get(token).getContent();

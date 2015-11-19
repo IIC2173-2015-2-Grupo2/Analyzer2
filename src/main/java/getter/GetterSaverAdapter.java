@@ -3,7 +3,9 @@ package getter;
 
 import java.util.ArrayList;
 
+import model.NewsItemData;
 import saver.NewsSaver;
+import saver.DebuggerNewsSaver;
 
 /**
  * Adaptador entre el Parser del componente y el Saver. Extiende Thread para poder independizarse de las
@@ -12,10 +14,13 @@ import saver.NewsSaver;
  *
  */
 public class GetterSaverAdapter extends Thread{
-	private ArrayList<New> toProcess;
+	private ArrayList<NewsItemData> toProcess;
 	private NewsSaver newsSaver;
-	public GetterSaverAdapter(ArrayList<New> allNews){
+	private DebuggerNewsSaver debuggerNewsSaver;
+	public GetterSaverAdapter(ArrayList<NewsItemData> allNews){
 		newsSaver = new NewsSaver();
+		//usado para debuggear
+		//debuggerNewsSaver = new DebuggerNewsSaver();
 		toProcess = allNews;
 	}
 	public void run(){
@@ -26,9 +31,10 @@ public class GetterSaverAdapter extends Thread{
 	 * Guarda, de a una, las noticias en la base de datos.
 	 */
 	private void saveNews(){
-		for (New news : toProcess){
-			String[] toSave = {news.getTitle(), news.getDate(), news.getHeader(), news.getUrl(), news.getTags()};
-			newsSaver.saveInDataBase(toSave);
+		for (NewsItemData newItem : toProcess){
+			newsSaver.saveInDataBase(newItem);
+			//usado para debuggear
+			//debuggerNewsSaver.saveInDatabase(newItem);
 		}
 	}
 }

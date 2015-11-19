@@ -1,60 +1,65 @@
 package model;
 
+import java.util.HashMap;
 
 public class NewsItemData {
 
     public static String titleColumn = "title";
     public static String dateColumn = "date";
     public static String summaryColumn = "summary";
+    public static String bodyColumn = "body";
     public static String urlColumn = "url";
     public static String imageColumn = "image";
     public static String sourceColumn = "source";
+    public static String languageColumn = "language";
+    public static String tagsColumn = "tags";
     private HashMap<String, String> setFields;
-		private String[] tags;
+	private String tags;
 
-    public NewsItemData(){
+    public NewsItemData(String title, String date, String summary, String body, String url, String image, String source, String language, String tags){
         setFields = new HashMap<>();
+        if(!title.equals("null"))
+            setFields.put(titleColumn, title);
+        if(!date.equals("null"))
+            setFields.put(dateColumn, date);
+        if(!summary.equals("null"))
+            setFields.put(summaryColumn, summary);
+        if(!body.equals("null"))
+            setFields.put(bodyColumn, body);
+        if(!url.equals("null"))
+            setFields.put(urlColumn, url);
+        if(!image.equals("null"))
+            setFields.put(imageColumn, image);
+        if(!source.equals("null"))
+            setFields.put(sourceColumn, source);
+        if(!language.equals("null"))
+            setFields.put(languageColumn, language);
+       /* if(!language.equals(""))
+            setFields.put(tagsColumn, tags);*/
+        if(!tags.equals("null"))
+        	this.tags = tags;
     }
 
-		public HashMap<String, String> getSetFields() {
+	public HashMap<String, String> getSetFields() {
         return setFields;
     }
 
-    public void setTitle(String title) {
-			if(title.equals("null") == false)
-        setFields.put(titleColumn, title);
-    }
+	public String getBody(){
+		return setFields.get("body");
+	}
 
-    public void setSummary(String summary) {
-			if(summary.equals("null") == false)
-        setFields.put(summaryColumn, summary);
-    }
+	public String getTags() {
+		return tags;
+	}
+	public String getLanguage(){
+		return setFields.get("language");
+	}
+	@Override
+	public String toString(){
+		return "Title: " + setFields.get("title") + "\ndate: " + setFields.get("date") + "\nsummary: " + setFields.get("summary") + 
+				"\nbody: " + setFields.get("body") + "\nurl: " + setFields.get("url") + "\nimage: " + setFields.get("image") +
+				"\nsource: " + setFields.get("source") + "\nlanguage: " + setFields.get("language") + "\ntags: " + tags;
+	}
 
-    public void setDate(String date) {
-			if(date.equals("null") == false)
-        setFields.put(dateColumn, date);
-    }
 
-    public void setUrl(String url) {
-			if(url.equals("null") == false)
-        setFields.put(urlColumn, url);
-    }
-
-    public void setImage(String image) {
-			if(image.equals("null") == false)
-        setFields.put(imageColumn, image);
-    }
-
-    public void setSource(String source) {
-			if(source.equals("null") == false)
-        setFields.put(sourceColumn, source);
-    }
-
-		public void setTags(String[] tags){
-			this.tags = tags;
-		}
-
-		public String[] getTags(){
-			return tags;
-		}
 }
