@@ -41,6 +41,7 @@ public class Main{
 			e.printStackTrace();
 		}
 		*/
+		Spark.port(8080);
 		post("/", (request, response) -> {
 			NewArrivalHandler nah = new NewArrivalHandler();
 			nah.newArrival(request.body());

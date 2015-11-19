@@ -19,25 +19,25 @@ public class NewsItemData {
     public NewsItemData(String title, String date, String summary, String body, String url, String image, String source, String language, String tags){
         setFields = new HashMap<>();
         if(!title.equals("null"))
-            setFields.put(titleColumn, title);
+            setFields.put(titleColumn, sanitizeText(title));
         if(!date.equals("null"))
-            setFields.put(dateColumn, date);
+            setFields.put(dateColumn, sanitizeText(date));
         if(!summary.equals("null"))
-            setFields.put(summaryColumn, summary);
+            setFields.put(summaryColumn, sanitizeText(summary));
         if(!body.equals("null"))
-            setFields.put(bodyColumn, body);
+            setFields.put(bodyColumn, sanitizeText(body));
         if(!url.equals("null"))
             setFields.put(urlColumn, url);
         if(!image.equals("null"))
             setFields.put(imageColumn, image);
         if(!source.equals("null"))
-            setFields.put(sourceColumn, source);
+            setFields.put(sourceColumn, sanitizeText(source));
         if(!language.equals("null"))
             setFields.put(languageColumn, language);
        /* if(!language.equals(""))
             setFields.put(tagsColumn, tags);*/
         if(!tags.equals("null"))
-        	this.tags = tags;
+        	this.tags = sanitizeText(tags);
     }
 
 	public HashMap<String, String> getSetFields() {
@@ -61,5 +61,9 @@ public class NewsItemData {
 				"\nsource: " + setFields.get("source") + "\nlanguage: " + setFields.get("language") + "\ntags: " + tags;
 	}
 
-
+	public String sanitizeText(String str){
+		str = str.replaceAll("\"","");
+		str = str.replaceAll("\'","");
+		return str.replaceAll("'",""); 
+	}
 }
