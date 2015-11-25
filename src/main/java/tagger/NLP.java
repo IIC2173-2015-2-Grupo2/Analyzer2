@@ -68,10 +68,10 @@ public abstract class NLP {
 	 * Borra las palabras dependiendo el idioma
 	 */
 	private static void deleteWords(){
-		if(language.equals("sp")){
+		if("sp".equals(language)){
 			deleteSpanishWords();
 		}
-		else if (language.equals("en")) {
+		else if ("en".equals(language)) {
 			deleteEnglishWords();
 		}
 	}

@@ -23,7 +23,6 @@ public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private String title, header, date, url, image, fuente;
 	private final String host, password, user;
 	private String txUri;
 	private WebResource resource2;

@@ -21,10 +21,10 @@ public class Tagger {
 
 	public static HashMap<String, Tag> existingTags;
 
-	private static HashSet<String> people;
-	private static HashSet<String> places;
-	private static HashSet<String> categories;
-	private static HashSet<String> companies;
+	private HashSet<String> people;
+	private HashSet<String> places;
+	private HashSet<String> categories;
+	private HashSet<String> companies;
 
 	public Tagger(){
 
@@ -104,7 +104,7 @@ public class Tagger {
 	}
 
 
-	public static  String mayBeTag(String token){
+	public String mayBeTag(String token){
 		return existingTags.get(token).getContent();
 	}
 

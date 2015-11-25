@@ -18,25 +18,23 @@ public class NewsItemData {
 
     public NewsItemData(String title, String date, String summary, String body, String url, String image, String source, String language, String tags){
         setFields = new HashMap<>();
-        if(!title.equals("null"))
+        if(!"null".equals(title))
             setFields.put(titleColumn, sanitizeText(title));
-        if(!date.equals("null"))
+        if(!"null".equals(date))
             setFields.put(dateColumn, sanitizeText(date));
-        if(!summary.equals("null"))
+        if(!"null".equals(summary))
             setFields.put(summaryColumn, sanitizeText(summary));
-        if(!body.equals("null"))
+        if(!"null".equals(body))
             setFields.put(bodyColumn, sanitizeText(body));
-        if(!url.equals("null"))
+        if(!"null".equals(url))
             setFields.put(urlColumn, url);
-        if(!image.equals("null"))
+        if(!"null".equals(image))
             setFields.put(imageColumn, image);
-        if(!source.equals("null"))
+        if(!"null".equals(source))
             setFields.put(sourceColumn, sanitizeText(source));
-        if(!language.equals("null"))
+        if(!"null".equals(language))
             setFields.put(languageColumn, language);
-       /* if(!language.equals(""))
-            setFields.put(tagsColumn, tags);*/
-        if(!tags.equals("null"))
+        if(!"null".equals(tags))
         	this.tags = sanitizeText(tags);
     }
 

@@ -5,8 +5,6 @@ public class Tag {
 	public enum DataSetType {PEOPLE, PLACES, CATEGORIES, COMPANIES, OTHER}
 
 	private String content;
-	private String startsWith;
-	private int category;
 //	private int timesWasQueried;
 //	private int timesFound;
 
@@ -26,6 +24,9 @@ public class Tag {
 
 	public String getContent(){
 		return this.content;
+	}
+	public DataSetType getDataSet() {
+		return this.dataSet;
 	}
 
 //	public void queried(){

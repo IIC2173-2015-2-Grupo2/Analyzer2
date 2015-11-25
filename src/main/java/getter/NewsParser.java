@@ -2,7 +2,6 @@ package getter;
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 
-import org.eclipse.jetty.util.log.Log;
 import org.json.*;
 
 import model.NewsItemData;

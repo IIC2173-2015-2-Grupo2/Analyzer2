@@ -3,9 +3,7 @@ package getter;
 
 import static spark.Spark.*;
 
-import model.NewsItemData;
 import saver.DatabaseManager;
-import saver.NewsSaver;
 import spark.*;
 
 public class Main{
