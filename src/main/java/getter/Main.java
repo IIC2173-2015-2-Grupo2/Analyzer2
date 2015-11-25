@@ -1,10 +1,14 @@
 package getter;
 
 
-import static spark.Spark.*;
+import static spark.Spark.post;
 
+import model.NewsItemData;
 import saver.DatabaseManager;
-import spark.*;
+import saver.NewsSaver;
+import spark.Request;
+import spark.Response;
+import spark.Spark;
 
 public class Main{
 	/**

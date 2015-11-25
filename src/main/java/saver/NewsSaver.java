@@ -7,7 +7,6 @@ import tagger.Tag.DataSetType;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
-import org.omg.IOP.TAG_CODE_SETS;
 
 import java.util.Map.Entry;
 
@@ -26,16 +25,15 @@ public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private String title, header, date, url, image, fuente, type;
 	private final String host, password, user;
 	private String txUri;
 	private WebResource resource2;
 	private byte[] encodedBytes;
 
 	public NewsSaver(){
-		host = System.getenv("NEO4J_HOST");
- 		password = System.getenv("NEO4J_PASS");
-		user = System.getenv("NEO4J_USER");
+		host = "arqui7.ing.puc.cl";	 	
+ 		password = "7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df";		 	
+		user = "neo4j";
 		txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
 		encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
@@ -63,7 +61,7 @@ public class NewsSaver {
 		arr.add(inner);
 		JsonObject outer = new JsonObject();
 		outer.add("statements", arr);
-
+		
 		ClientResponse response2 = getClientResponse(resource2, outer, encodedBytes);
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
@@ -75,6 +73,7 @@ public class NewsSaver {
 				tags[i] = new Tag(sepTags[i], DataSetType.OTHER);
 			saveNewsItemTags(tags, newsItemId);
 		}
+		//System.out.println("Saved news id: " + newsItemId);
 		return newsItemId;
 	}
 
@@ -84,9 +83,8 @@ public class NewsSaver {
 				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
 						"MERGE (n:"
 						+ tagNodeLabel + " { "
-						+ type + ":' " + data[i].
-						+ nameColumn + "  : '"
-						+ data[i] + "' }) RETURN ID(n)" +
+						+ "type:'" + data[i].getDataSet().toString()  + "',"
+						+ nameColumn + "  : '" + data[i].getContent() + "' }) RETURN ID(n)" +
 						"\"} ]}";
 
 				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
@@ -104,7 +102,7 @@ public class NewsSaver {
 			}
 		}
 	}
-
+	
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
@@ -124,7 +122,7 @@ public class NewsSaver {
 		        .header("Authorization", "Basic " + new String(bytes))
 		        .post(ClientResponse.class);
 	}
-
+	
 	private ClientResponse getClientResponse(WebResource resource, String entity, byte[] bytes){
 		return resource
 		        .accept( MediaType.APPLICATION_JSON)

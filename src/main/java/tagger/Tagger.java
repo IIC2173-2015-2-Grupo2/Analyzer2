@@ -78,7 +78,7 @@ public class Tagger {
 			return null;
 		}
 
-		ArrayList<String> arrlst = NLP.getTags(body.split(",")[0], body.split(",")[1]);
+		ArrayList<String> arrlst = NLP.getTags(body.split("ç")[0], body.split("ç")[1]);
 		Tag[] output = new Tag[arrlst.size()];
 
 		for (int i = 0 ; i < arrlst.size() ; i++) {

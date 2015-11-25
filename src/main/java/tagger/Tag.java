@@ -19,6 +19,7 @@ public class Tag {
 	public String getContent(){
 		return this.content;
 	}
+	
 	public DataSetType getDataSet() {
 		return this.dataSet;
 	}

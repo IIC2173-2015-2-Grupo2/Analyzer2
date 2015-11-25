@@ -35,7 +35,7 @@ public class NewsItemData {
         if(!"null".equals(language))
             setFields.put(languageColumn, language);
         if(!"null".equals(tags))
-        	this.tags = sanitizeText(tags);
+        	this.tags = sanitizeText(tags).replace("[", "").replace("]", "");
     }
 
 	public HashMap<String, String> getSetFields() {

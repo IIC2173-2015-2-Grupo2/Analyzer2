@@ -18,18 +18,16 @@ public abstract class NLP {
 		language = lan;
 		capitalLetterWords = new ArrayList<String>();
 		repeatedWords = new ArrayList<String>();
-		
 		//Llenamos la lista de las palabras con mayúsculas
 		fillCapitalLetterWords(text);
-		innerText = innerText.toLowerCase();
-		
+
 		//Borramos la puntuación (es independiente del lenguaje)
 		String[] punctuation = {".", ",", ";", ":", "-", "_", "(", ")", "?", "¿", "!", "¡", "'", "<", ">"};	
 		for (String word : punctuation) {
 			innerText = innerText.replace(word, "");
 		}
 		innerText = innerText.trim();
-		
+
 		//Contamos las palabras repetidas
 		wordCount = findDuplicateString(innerText);
 
@@ -38,12 +36,18 @@ public abstract class NLP {
 
 		//Añadimos las palabras que se repiten 2 o más veces
 		for (String word : wordCount.keySet()) {
-			int times = wordCount.get(word);
-			if(times >= 2){
-				repeatedWords.add(word);
+			try{
+				int times = wordCount.get(word);
+				if(times >= 2){
+					repeatedWords.add(word);
+				}
 			}
+			catch (Exception e){
+				e.getMessage();
+			}
+
 		}
-		
+
 
 		//Añadimos las palabras con mayúsculas y las palabras repetidas al output y lo retornamos
 		ArrayList<String> outputWords = new ArrayList<String>();
@@ -53,17 +57,17 @@ public abstract class NLP {
 		//return createTags(repeatedWords, importantWords);
 	}
 
-//	private ArrayList<Tag> createTags(ArrayList<String> repeatedWords, ArrayList<String> importantWords) {
-//		ArrayList<Tag> tagList = new ArrayList<Tag>();
-//		for (String word : repeatedWords) {
-//			tagList.add(new Tag(word));
-//		}
-//		for (String word : importantWords) {
-//			tagList.add(new Tag(word));
-//		}
-//		return tagList;
-//	}
-	
+	//	private ArrayList<Tag> createTags(ArrayList<String> repeatedWords, ArrayList<String> importantWords) {
+	//		ArrayList<Tag> tagList = new ArrayList<Tag>();
+	//		for (String word : repeatedWords) {
+	//			tagList.add(new Tag(word));
+	//		}
+	//		for (String word : importantWords) {
+	//			tagList.add(new Tag(word));
+	//		}
+	//		return tagList;
+	//	}
+
 	/**
 	 * Borra las palabras dependiendo el idioma
 	 */
@@ -75,7 +79,7 @@ public abstract class NLP {
 			deleteEnglishWords();
 		}
 	}
-	
+
 	/**
 	 * Borra palabras en inglés
 	 */
@@ -103,7 +107,7 @@ public abstract class NLP {
 				"proper", "fast", "wide", "item", "wrong", "ago", "behind", "quick", "straight", "direct", "extra", "morning", "pretty", "overall",
 				"alone", "bright", "flat", "whatever", "slow", "clean", "fresh", "whenever", "cheap", "thin", "cool", "fair", "fine", "smooth", 
 				"false", "thick", "collect", "nearby", "wild", "apart", "none", "aside", "loud", "super", "tight", "honest", "ok", "pray"};
-		String[] preposicions = {"on", "at", "in", "since", "for", "ago", "before", "to", "past", "to", "till", "until", "by", "next",
+		String[] preposicions = {"The", "On", "on", "at", "in", "since", "for", "ago", "before", "to", "past", "to", "till", "until", "by", "next",
 				"to", "beside", "under", "below", "over", "above", "across", "through", "into", "towards", "onto", "from", "of", "off",
 				"out", "about"};
 		String[] adverbs = {"was", "not", "also", "often", "too", "usually", "really", "early", "never", "always", "sometimes", "together", "likely",
@@ -126,7 +130,7 @@ public abstract class NLP {
 		deleteFromMap(adverbs);
 		deleteFromMap(demonstratives);
 	}
-	
+
 	/**
 	 * Borra palabras en español
 	 */
@@ -193,7 +197,7 @@ public abstract class NLP {
 			}
 		}
 	}
-	
+
 	/**
 	 * Analiza un texto y determina cuantas veces se repiten las palabras. Pone la informacion en un Map
 	 * @param str texto que se quiere analizar en busca de palabras repetidas
