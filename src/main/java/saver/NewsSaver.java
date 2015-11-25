@@ -70,21 +70,41 @@ public class NewsSaver {
 			String[] sepTags = data.getTags().split(",");
 			Tag[] tags = new Tag[sepTags.length];
 			for(int i = 0; i < tags.length; i++)
-				tags[i] = new Tag(sepTags[i], DataSetType.OTHER);
+				tags[i] = new Tag(sepTags[i], DataSetType.Tag);
 			saveNewsItemTags(tags, newsItemId);
 		}
 		//System.out.println("Saved news id: " + newsItemId);
+		saveProvider(data, newsItemId);
 		return newsItemId;
 	}
 
+	public void saveProvider(NewsItemData news, int newsId){
+		String providerCreator = "{\"statements\" : [ {\"statement\" : \"" +
+				"MERGE (n:NewsProvider { "
+				+ nameColumn + "  : '" + news.getSource().trim() + "' }) RETURN ID(n)" +
+				"\"} ]}";
+
+		ClientResponse responseTag = getClientResponse(resource2, providerCreator, encodedBytes);
+		String tagItem = responseTag.getEntity(String.class);
+		int auxSourceId = getIdFromJsonResult(tagItem);
+		responseTag.close();
+		
+		String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
+				+ "MATCH (a:NewsItem),(b:NewsProvider) "
+				+ "WHERE ID(a) = %d AND ID(b) = %d "
+				+ "CREATE (b)-[r:`posted`]->(a)\"} ]}", newsId, auxSourceId);
+
+		ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
+		relationTag.close();
+	}
+	
 	public void saveNewsItemTags(Tag[] data, int id){
 		if(data != null){
 			for (int i = 0; i < data.length; i++) {
 				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
 						"MERGE (n:"
-						+ tagNodeLabel + " { "
-						+ "type:'" + data[i].getDataSet().toString()  + "',"
-						+ nameColumn + "  : '" + data[i].getContent() + "' }) RETURN ID(n)" +
+						+ data[i].getDataSet().toString() + " { "
+						+ nameColumn + "  : '" + data[i].getContent().trim() + "' }) RETURN ID(n)" +
 						"\"} ]}";
 
 				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
@@ -93,9 +113,9 @@ public class NewsSaver {
 				responseTag.close();
 
 				String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
-						+ "MATCH (a:NewsItem),(b:Tag) "
+						+ "MATCH (a:NewsItem),(b:%s) "
 						+ "WHERE ID(a) = %d AND ID(b) = %d "
-						+ "CREATE (b)-[r:`is in `]->(a)\"} ]}", id, auxTagId);
+						+ "CREATE (b)-[r:`has`]->(a)\"} ]}", data[i].getDataSet().toString(), id, auxTagId);
 
 				ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
 				relationTag.close();

@@ -42,6 +42,10 @@ public class NewsItemData {
         return setFields;
     }
 
+	public String getSource(){
+		return setFields.get(sourceColumn);
+	}
+	
 	public String getBody(){
 		return setFields.get("body");
 	}

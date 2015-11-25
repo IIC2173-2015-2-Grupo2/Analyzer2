@@ -2,7 +2,7 @@ package tagger;
 
 public class Tag {
 
-	public enum DataSetType {PEOPLE, PLACES, CATEGORIES, COMPANIES, OTHER}
+	public enum DataSetType {People, Places, Categories, Companies, Tag}
 
 	private String content;
 //	private int timesWasQueried;

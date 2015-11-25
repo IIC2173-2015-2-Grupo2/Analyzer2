@@ -85,16 +85,16 @@ public class Tagger {
 			String tag = arrlst.get(i);
 			DataSetType dataSet = null;
 
-			if(people.contains(tag))
-				dataSet = DataSetType.PEOPLE;
-			else if(places.contains(tag))
-				dataSet = DataSetType.PLACES;
-			else if(categories.contains(tag))
-				dataSet = DataSetType.CATEGORIES;
-			else if(companies.contains(tag))
-				dataSet = DataSetType.COMPANIES;
+			if(people.contains(tag.trim()))
+				dataSet = DataSetType.People;
+			else if(places.contains(tag.trim()))
+				dataSet = DataSetType.Places;
+			else if(categories.contains(tag.trim()))
+				dataSet = DataSetType.Categories;
+			else if(companies.contains(tag.trim()))
+				dataSet = DataSetType.Companies;
 			else
-				dataSet = DataSetType.OTHER;
+				dataSet = DataSetType.Tag;
 
 			output[i] = new Tag(tag, dataSet);
 		}
