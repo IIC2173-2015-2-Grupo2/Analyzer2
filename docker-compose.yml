@@ -1,0 +1,11 @@
+web:
+  build: .
+  restart: always
+  command: mvn exec:java
+  ports:
+    - '4567:4567'
+  environment:
+    - NEO4J_HOST
+    - NEO4J_PORT
+    - NEO4J_USER
+    - NEO4J_PASS
