@@ -62,11 +62,8 @@ public class NewsParser {
 			forTagger.add(recentNew.getBody() + "ç" + recentNew.getLanguage());
 		}
 
-		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews);
+		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews, forTagger);
 		getterSaverAdapter.start();
-
-		GetterTaggerAdapter getterTaggerAdapter = new GetterTaggerAdapter(forTagger);
-		getterTaggerAdapter.start();
 
 		parserLock.unlock();
 

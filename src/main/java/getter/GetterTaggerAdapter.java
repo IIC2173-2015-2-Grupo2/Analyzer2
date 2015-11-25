@@ -4,6 +4,8 @@ package getter;
 
 import java.util.ArrayList;
 
+import saver.NewsSaver;
+import tagger.Tag;
 import tagger.Tagger;
 
 /**
@@ -15,9 +17,12 @@ import tagger.Tagger;
 public class GetterTaggerAdapter extends Thread{
 	private ArrayList<String> bodies;
 	private Tagger tagger;
-	public GetterTaggerAdapter(ArrayList<String> b){
+	private int newsId;
+	
+	public GetterTaggerAdapter(ArrayList<String> b, int newsId){
 		tagger = new Tagger();
 		bodies = b;
+		this.newsId = newsId;
 	}
 	public void run(){
 		sendList();
@@ -29,7 +34,9 @@ public class GetterTaggerAdapter extends Thread{
 	private void sendList(){
 		for (String string : bodies) {
 			try {
-				tagger.tagNews(string);
+				Tag[] tags = tagger.tagNews(string);
+				NewsSaver saver = new NewsSaver();
+				saver.saveNewsItemTags(tags, newsId);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

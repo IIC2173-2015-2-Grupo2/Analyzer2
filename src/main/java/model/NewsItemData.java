@@ -49,6 +49,11 @@ public class NewsItemData {
 	public String getTags() {
 		return tags;
 	}
+	
+	public void addTags(String tags){
+		this.tags += tags;
+	}
+	
 	public String getLanguage(){
 		return setFields.get("language");
 	}

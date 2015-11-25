@@ -1,10 +1,13 @@
 package saver;
 
 import model.NewsItemData;
+import tagger.Tag;
+import tagger.Tag.DataSetType;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
+import org.omg.IOP.TAG_CODE_SETS;
 
 import java.util.Map.Entry;
 
@@ -23,14 +26,15 @@ public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
 	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
+	private String title, header, date, url, image, fuente, type;
 	private final String host, password, user;
 	private String txUri;
 	private WebResource resource2;
 	private byte[] encodedBytes;
 
 	public NewsSaver(){
-		host = System.getenv("NEO4J_HOST");		 	
- 		password = System.getenv("NEO4J_PASS");		 	
+		host = System.getenv("NEO4J_HOST");
+ 		password = System.getenv("NEO4J_PASS");
 		user = System.getenv("NEO4J_USER");
 		txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
@@ -59,23 +63,30 @@ public class NewsSaver {
 		arr.add(inner);
 		JsonObject outer = new JsonObject();
 		outer.add("statements", arr);
-		
+
 		ClientResponse response2 = getClientResponse(resource2, outer, encodedBytes);
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
+		if(data.getTags() != null){
+			String[] sepTags = data.getTags().split(",");
+			Tag[] tags = new Tag[sepTags.length];
+			for(int i = 0; i < tags.length; i++)
+				tags[i] = new Tag(sepTags[i], DataSetType.OTHER);
+			saveNewsItemTags(tags, newsItemId);
+		}
 		return newsItemId;
 	}
 
-	public void saveNewsItemTags(NewsItemData data, int id){
-		if(data.getTags() != null){
-			String[] sepTags = data.getTags().split(",");
-			for (int i = 0; i < sepTags.length; i++) {
+	public void saveNewsItemTags(Tag[] data, int id){
+		if(data != null){
+			for (int i = 0; i < data.length; i++) {
 				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
 						"MERGE (n:"
 						+ tagNodeLabel + " { "
+						+ type + ":' " + data[i].
 						+ nameColumn + "  : '"
-						+ sepTags[i] + "' }) RETURN ID(n)" +
+						+ data[i] + "' }) RETURN ID(n)" +
 						"\"} ]}";
 
 				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
@@ -93,7 +104,7 @@ public class NewsSaver {
 			}
 		}
 	}
-	
+
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
@@ -113,7 +124,7 @@ public class NewsSaver {
 		        .header("Authorization", "Basic " + new String(bytes))
 		        .post(ClientResponse.class);
 	}
-	
+
 	private ClientResponse getClientResponse(WebResource resource, String entity, byte[] bytes){
 		return resource
 		        .accept( MediaType.APPLICATION_JSON)

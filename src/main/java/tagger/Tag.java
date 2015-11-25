@@ -8,12 +8,6 @@ public class Tag {
 //	private int timesWasQueried;
 //	private int timesFound;
 
-	public static final int TAG_CATEGORY_PEOPLE = 0;
-	public static final int TAG_CATEGORY_COMPANIES = 1;
-	public static final int TAG_CATEGORY_PLACES = 2;
-	public static final int TAG_CATEGORY_CATEGORIES = 3;
-	public static final int TAG_CATEGORY_OTHERS = 4;
-
 	public static final int MIN_LEN_TAG = 4;
 	private DataSetType dataSet;
 
