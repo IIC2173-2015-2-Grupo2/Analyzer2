@@ -3,7 +3,7 @@ web:
   restart: always
   command: mvn exec:java
   ports:
-    - '4567:4567'
+    - '8080:8080'
   environment:
     - NEO4J_HOST
     - NEO4J_PORT

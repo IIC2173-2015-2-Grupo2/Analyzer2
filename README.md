@@ -23,7 +23,7 @@ $ mvn exec:java
 ```
 
 ### Docker
-This image exposes port `4567`.
+This image exposes port `8080`.
 
 #### Build
 ```sh
@@ -40,5 +40,5 @@ $ docker build --no-cache --rm -tag==analizer2
 $ make docker-run
 
 # Manual
-$ docker run -e NEO4J_HOST -e NEO4J_PORT -e NEO4J_USER -e NEO4J_PASS --publish 4567:4567 --rm --name=analizer2 analizer2
+$ docker run -e NEO4J_HOST -e NEO4J_PORT -e NEO4J_USER -e NEO4J_PASS --publish 8080:8080 --rm --name=analizer2 analizer2
 ```

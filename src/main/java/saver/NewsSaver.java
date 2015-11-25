@@ -30,10 +30,12 @@ public class NewsSaver {
 	private WebResource resource2;
 	private byte[] encodedBytes;
 
-	public NewsSaver(){
-		host = "arqui7.ing.puc.cl";	 	
- 		password = "7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df";		 	
-		user = "neo4j";
+	public NewsSaver() {
+		// port = System.getenv("NEO4J_PORT");
+		host = System.getenv("NEO4J_HOST");
+		password = System.getenv("NEO4J_PASS");
+		user = System.getenv("NEO4J_USER");
+
 		txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
 		encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
@@ -61,7 +63,7 @@ public class NewsSaver {
 		arr.add(inner);
 		JsonObject outer = new JsonObject();
 		outer.add("statements", arr);
-		
+
 		ClientResponse response2 = getClientResponse(resource2, outer, encodedBytes);
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
@@ -88,7 +90,7 @@ public class NewsSaver {
 		String tagItem = responseTag.getEntity(String.class);
 		int auxSourceId = getIdFromJsonResult(tagItem);
 		responseTag.close();
-		
+
 		String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
 				+ "MATCH (a:NewsItem),(b:NewsProvider) "
 				+ "WHERE ID(a) = %d AND ID(b) = %d "
@@ -97,7 +99,7 @@ public class NewsSaver {
 		ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
 		relationTag.close();
 	}
-	
+
 	public void saveNewsItemTags(Tag[] data, int id){
 		if(data != null){
 			for (int i = 0; i < data.length; i++) {
@@ -122,7 +124,7 @@ public class NewsSaver {
 			}
 		}
 	}
-	
+
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
 		return parser.parse(result)
@@ -142,7 +144,7 @@ public class NewsSaver {
 		        .header("Authorization", "Basic " + new String(bytes))
 		        .post(ClientResponse.class);
 	}
-	
+
 	private ClientResponse getClientResponse(WebResource resource, String entity, byte[] bytes){
 		return resource
 		        .accept( MediaType.APPLICATION_JSON)

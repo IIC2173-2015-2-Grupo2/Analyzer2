@@ -1,7 +1,7 @@
 package getter;
 
-
 import static spark.Spark.post;
+import static spark.Spark.get;
 
 import model.NewsItemData;
 import saver.DatabaseManager;
@@ -32,7 +32,7 @@ public class Main{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}*/
-		
+
 		DatabaseManager.createDatabaseManager();
 
 		/*
@@ -49,6 +49,8 @@ public class Main{
 			nah.newArrival(request.body());
 			return response;
 		});
+
+		get("/", (request, response) -> "status: on");
 		/*
 		NewsSaver saver = new NewsSaver();
 		NewsItemData item = new NewsItemData("Some title", "Some date", "Some summary", "Body", "url", "image", "source", "es", "tag1, tag2, tag3");
