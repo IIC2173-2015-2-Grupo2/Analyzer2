@@ -75,7 +75,7 @@ public class NewsSaver {
 				tags[i] = new Tag(sepTags[i], DataSetType.Tag);
 			saveNewsItemTags(tags, newsItemId);
 		}
-		//System.out.println("Saved news id: " + newsItemId);
+		System.out.println("Saved news id: " + newsItemId);
 		saveProvider(data, newsItemId);
 		return newsItemId;
 	}
@@ -97,6 +97,7 @@ public class NewsSaver {
 				+ "CREATE (b)-[r:`posted`]->(a)\"} ]}", newsId, auxSourceId);
 
 		ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
+		System.out.println("Saved provider id: " + auxSourceId);
 		relationTag.close();
 	}
 
@@ -113,7 +114,7 @@ public class NewsSaver {
 				String tagItem = responseTag.getEntity(String.class);
 				int auxTagId = getIdFromJsonResult(tagItem);
 				responseTag.close();
-
+				System.out.println("Saved tag id: " + auxTagId);
 				String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
 						+ "MATCH (a:NewsItem),(b:%s) "
 						+ "WHERE ID(a) = %d AND ID(b) = %d "
