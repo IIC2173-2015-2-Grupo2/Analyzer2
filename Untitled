@@ -1,0 +1,1 @@
+docker run -d -p 80:4567 -e "NEO4J_HOST=arqui7.ing.puc.cl" -e "NEO4J_USER=neo4j" -e "NEO4J_PASS=7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df" -e "export NEO4J_PORT=80" analyserlocal mvn exec:java

@@ -88,11 +88,11 @@ public class Tagger {
 			if(people.contains(tag.trim()))
 				dataSet = DataSetType.People;
 			else if(places.contains(tag.trim()))
-				dataSet = DataSetType.Places;
+				dataSet = DataSetType.Location;
 			else if(categories.contains(tag.trim()))
-				dataSet = DataSetType.Categories;
+				dataSet = DataSetType.Category;
 			else if(companies.contains(tag.trim()))
-				dataSet = DataSetType.Companies;
+				dataSet = DataSetType.Company;
 			else
 				dataSet = DataSetType.Tag;
 
