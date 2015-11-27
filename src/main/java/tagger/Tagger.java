@@ -86,7 +86,7 @@ public class Tagger {
 			DataSetType dataSet = null;
 
 			if(people.contains(tag.trim()))
-				dataSet = DataSetType.People;
+				dataSet = DataSetType.Person;
 			else if(places.contains(tag.trim()))
 				dataSet = DataSetType.Location;
 			else if(categories.contains(tag.trim()))
