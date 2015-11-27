@@ -19,7 +19,7 @@ public abstract class NLP {
 		capitalLetterWords = new ArrayList<String>();
 		repeatedWords = new ArrayList<String>();
 		//Llenamos la lista de las palabras con mayúsculas
-		fillCapitalLetterWords(text);
+		fillCapitalLetterWords(text.substring(1));
 
 		//Borramos la puntuación (es independiente del lenguaje)
 		String[] punctuation = {".", ",", ";", ":", "-", "_", "(", ")", "?", "¿", "!", "¡", "'", "<", ">"};	
@@ -54,20 +54,8 @@ public abstract class NLP {
 		outputWords.addAll(repeatedWords);
 		outputWords.addAll(capitalLetterWords);
 		return outputWords;
-		//return createTags(repeatedWords, importantWords);
 	}
-
-	//	private ArrayList<Tag> createTags(ArrayList<String> repeatedWords, ArrayList<String> importantWords) {
-	//		ArrayList<Tag> tagList = new ArrayList<Tag>();
-	//		for (String word : repeatedWords) {
-	//			tagList.add(new Tag(word));
-	//		}
-	//		for (String word : importantWords) {
-	//			tagList.add(new Tag(word));
-	//		}
-	//		return tagList;
-	//	}
-
+	
 	/**
 	 * Borra las palabras dependiendo el idioma
 	 */
@@ -94,11 +82,11 @@ public abstract class NLP {
 				"say", "namely", "differently", "put", "matter", "fact", "actually", "indeed", "as", "regard", "to", "regards",
 				"concerned", "conclusion", "brief", "summary", "up", "down", "rather", "precise", "afterwards", "later",
 				"meantime", "meanwhile", "anyway", "anyhow", "any", "rate", "therefore", "thus", "after"};
-		String[] personalPronouns = {"I", "me", "mine", "myself", "my", "you", "your", "yours", "yourself", "he", "him", "his", "himself",
+		String[] personalPronouns = {"i", "me", "mine", "myself", "my", "you", "your", "yours", "yourself", "he", "him", "his", "himself",
 				"she", "her", "hers", "herself", "it", "its", "itself", "we", "us", "our", "ours", "ourselves", "you", "your", "yours", 
 				"yourself", "yourselves", "they", "them", "their", "theirs", "themselves", "thou", "thee", "thy", "thine", "thyself",
 				"who", "whom", "whomself", "whoself", "whose"};
-		String[] extras = {"los", "faced", "take", "In", "final", "title", "there", "when", "how", "so", "up", "out", "no", "only", "well", "then", "where",
+		String[] extras = {"los", "faced", "take", "final", "title", "there", "when", "how", "so", "up", "out", "no", "only", "well", "then", "where",
 				"why", "now", "around", "once", "down", "here", "tonight", "away", "today", "far", "quite", "later", "above", "yet", "maybe", "otherwise",
 				"near", "forward", "somewhere", "anywhere", "please", "forever", "somehow", "absolutely", "abroad", "yeah", "nowhere", "tomorrow", "yesterday",
 				"more", "about", "such", "through", "new", "just", "any", "each", "much", "before", "between", "free", "right", "best", "since",
@@ -107,7 +95,7 @@ public abstract class NLP {
 				"proper", "fast", "wide", "item", "wrong", "ago", "behind", "quick", "straight", "direct", "extra", "morning", "pretty", "overall",
 				"alone", "bright", "flat", "whatever", "slow", "clean", "fresh", "whenever", "cheap", "thin", "cool", "fair", "fine", "smooth", 
 				"false", "thick", "collect", "nearby", "wild", "apart", "none", "aside", "loud", "super", "tight", "honest", "ok", "pray"};
-		String[] preposicions = {"The", "On", "on", "at", "in", "since", "for", "ago", "before", "to", "past", "to", "till", "until", "by", "next",
+		String[] preposicions = {"on", "at", "in", "since", "for", "ago", "before", "to", "past", "to", "till", "until", "by", "next",
 				"to", "beside", "under", "below", "over", "above", "across", "through", "into", "towards", "onto", "from", "of", "off",
 				"out", "about"};
 		String[] adverbs = {"was", "not", "also", "often", "too", "usually", "really", "early", "never", "always", "sometimes", "together", "likely",
@@ -214,7 +202,7 @@ public abstract class NLP {
 					++count;
 				}
 			}
-			map.put(word, count);
+			map.put(word.toLowerCase(), count);
 			count = 0;
 		}
 
