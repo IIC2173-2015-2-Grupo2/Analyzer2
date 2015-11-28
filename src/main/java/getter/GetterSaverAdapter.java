@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import model.NewsItemData;
 import saver.NewsSaver;
-import saver.DebuggerNewsSaver;
+//import saver.DebuggerNewsSaver;
 
 /**
  * Adaptador entre el Parser del componente y el Saver. Extiende Thread para poder independizarse de las
@@ -16,7 +16,7 @@ import saver.DebuggerNewsSaver;
 public class GetterSaverAdapter extends Thread{
 	private ArrayList<NewsItemData> toProcess;
 	private NewsSaver newsSaver;
-	private DebuggerNewsSaver debuggerNewsSaver;
+//	private DebuggerNewsSaver debuggerNewsSaver;
 	private ArrayList<String> forTagger;
 	
 	public GetterSaverAdapter(ArrayList<NewsItemData> allNews, ArrayList<String> forTagger){
