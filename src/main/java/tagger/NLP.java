@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -35,7 +37,15 @@ public abstract class NLP {
 		deleteWords();
 
 		//Añadimos las palabras que se repiten 2 o más veces
-		for (String word : wordCount.keySet()) {
+		Iterator<Entry<String, Integer>> it = wordCount.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, Integer> word = it.next();
+			int times = word.getValue();
+			if(times >= 2){
+				repeatedWords.add(word.getKey());
+			}
+		}
+	/*	for (String word : wordCount.keySet()) {
 			try{
 				int times = wordCount.get(word);
 				if(times >= 2){
@@ -46,7 +56,7 @@ public abstract class NLP {
 				e.getMessage();
 			}
 
-		}
+		}*/
 
 
 		//Añadimos las palabras con mayúsculas y las palabras repetidas al output y lo retornamos
