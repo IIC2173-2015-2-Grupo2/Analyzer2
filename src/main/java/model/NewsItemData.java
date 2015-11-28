@@ -69,8 +69,9 @@ public class NewsItemData {
 	}
 
 	public String sanitizeText(String str){
-		str = str.replaceAll("\"","");
-		str = str.replaceAll("\'","");
-		return str.replaceAll("'",""); 
+		String toSanitize = str;
+		toSanitize = str.replaceAll("\"","");
+		toSanitize = str.replaceAll("\'","");
+		return toSanitize.replaceAll("'",""); 
 	}
 }

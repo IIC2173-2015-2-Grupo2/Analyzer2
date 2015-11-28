@@ -3,9 +3,7 @@ package getter;
 import static spark.Spark.post;
 import static spark.Spark.get;
 
-import model.NewsItemData;
 import saver.DatabaseManager;
-import saver.NewsSaver;
 import spark.Request;
 import spark.Response;
 import spark.Spark;

@@ -23,20 +23,17 @@ import com.sun.jersey.api.client.Client;
  */
 public class NewsSaver {
 	private String newsItemNodeLabel = "NewsItem";
-	private String tagNodeLabel = "Tag";
 	private String nameColumn = "name";
-	private final String host, password, user;
-	private String txUri;
 	private WebResource resource2;
 	private byte[] encodedBytes;
 
 	public NewsSaver() {
 		// port = System.getenv("NEO4J_PORT");
-		host = System.getenv("NEO4J_HOST");
-		password = System.getenv("NEO4J_PASS");
-		user = System.getenv("NEO4J_USER");
+		String host = System.getenv("NEO4J_HOST");
+		String password = System.getenv("NEO4J_PASS");
+		String user = System.getenv("NEO4J_USER");
 
-		txUri = "http://" + host + "/db/data/transaction/commit";
+		String txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
 		encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
 	}

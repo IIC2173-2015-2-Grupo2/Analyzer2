@@ -179,7 +179,7 @@ public abstract class NLP {
 			else {
 				lastWasCapital = false;
 			}
-			if (!temp.equals("") && !temp.equals("I") && !lastWasCapital){
+			if (!"".equals(temp) && !"I".equals(temp) && !lastWasCapital){
 				capitalLetterWords.add(temp);
 				temp = "";
 			}
