@@ -79,10 +79,14 @@ public class Tagger {
 		}
 
 		ArrayList<String> arrlst = NLP.getTags(body.split("ç")[0], body.split("ç")[1]);
-		Tag[] output = new Tag[arrlst.size()];
+		
+		ArrayList<Tag> preOutput = new ArrayList<Tag>();
 
 		for (int i = 0 ; i < arrlst.size() ; i++) {
 			String tag = arrlst.get(i);
+			if(tag == null){
+				continue;
+			}
 			DataSetType dataSet = null;
 
 			if(people.contains(tag.trim()))
@@ -96,10 +100,16 @@ public class Tagger {
 			else
 				dataSet = DataSetType.Tag;
 
-			output[i] = new Tag(tag, dataSet);
+			preOutput.add(new Tag(tag, dataSet));
 		}
 		
-
+		
+		Tag[] output = new Tag[preOutput.size()];
+		
+		for(int i = 0 ; i < output.length ; i++){
+			output[i] = preOutput.get(i);
+		}
+		
 		return output;
 	}
 
