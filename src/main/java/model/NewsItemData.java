@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import utils.Encoder;
+
 public class NewsItemData {
 
     public static String titleColumn = "title";
@@ -72,6 +74,7 @@ public class NewsItemData {
 		String toSanitize = str;
 		toSanitize = str.replaceAll("\"","");
 		toSanitize = str.replaceAll("\'","");
-		return toSanitize.replaceAll("'",""); 
+		toSanitize.replaceAll("'",""); 
+		return Encoder.convertToUTF8(toSanitize);
 	}
 }
