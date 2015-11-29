@@ -29,10 +29,9 @@ public class NewsSaver {
 
 	public NewsSaver() {
 		// port = System.getenv("NEO4J_PORT");
-		String host = "arqui7.ing.puc.cl";
-		String password = "7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df";
-		String user = "neo4j";
-
+		String host = System.getenv("NEO4J_HOST");
+		String password = System.getenv("NEO4J_PASS");
+		String user = System.getenv("NEO4J_USER");
 		String txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
 		encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
