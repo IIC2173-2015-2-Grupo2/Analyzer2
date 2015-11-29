@@ -89,6 +89,7 @@ public class NewsSaver {
 				tags[i] = new Tag(sepTags[i], DataSetType.Tag);
 			saveNewsItemTags(tags, newsItemId);
 		}
+		//System.out.println("Saved news id: " + newsItemId);
 		//Incluímos los tags del Tagger
 		try {
 			saveNewsItemTags(tagger.tagNews(data.getBody(), data.getLanguage()), newsItemId);
@@ -96,7 +97,7 @@ public class NewsSaver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		saveProvider(data, newsItemId);
 		return newsItemId;
 	}
@@ -149,13 +150,18 @@ public class NewsSaver {
 
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
-		return parser.parse(result)
-				.getAsJsonObject()
-				.getAsJsonArray("results")
-				.get(0).getAsJsonObject()
-				.getAsJsonArray("data")
-				.get(0).getAsJsonObject()
-				.get("row").getAsInt();
+		JsonArray aux = parser.parse(result).getAsJsonObject().getAsJsonArray("results");
+		if(aux.size() > 0){
+			return aux.get(0).getAsJsonObject()
+					.getAsJsonArray("data")
+					.get(0).getAsJsonObject()
+					.get("row").getAsInt();
+		} else {
+			return Integer.parseInt(parser.parse(result).getAsJsonObject()
+					.getAsJsonArray("errors")
+					.get(0).getAsJsonObject()
+					.get("message").getAsString().replaceAll("\\D+",""));
+		}
 	}
 
 	private ClientResponse getClientResponse(WebResource resource, JsonObject entity, byte[] bytes){
