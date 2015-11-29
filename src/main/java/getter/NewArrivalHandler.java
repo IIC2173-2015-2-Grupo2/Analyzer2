@@ -1,7 +1,5 @@
 package getter;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Abstracción para procesar los post de a uno.
@@ -9,10 +7,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class NewArrivalHandler {
 	private NewsParser newsParser;
-	private Lock parserLock;
 	public NewArrivalHandler(){
-		parserLock = new ReentrantLock();
-		newsParser = new NewsParser(parserLock);
+		newsParser = new NewsParser();
 	}
 
 	/**
@@ -21,7 +17,6 @@ public class NewArrivalHandler {
 	 * @param s es el JSON
 	 */
 	public void newArrival(String s){
-		parserLock.lock();
 		newsParser.newArrival(s);
 	}
 }

@@ -13,12 +13,10 @@ import model.NewsItemData;
 public class NewsParser {
 	private String newsToParse;
 	private ArrayList<String> forTagger;
-	private Lock parserLock;
 	private ArrayList<NewsItemData> listAllNews;
 
-	public NewsParser(Lock l){
+	public NewsParser(){
 		newsToParse = "";
-		parserLock = l;
 		listAllNews = new ArrayList<NewsItemData>();
 		forTagger = new ArrayList<String>();
 
@@ -64,8 +62,6 @@ public class NewsParser {
 
 		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews, forTagger);
 		getterSaverAdapter.start();
-
-		parserLock.unlock();
 
 	}
 
