@@ -3,9 +3,7 @@ package getter;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import model.NewsItemData;
 import saver.DatabaseManager;
-import saver.NewsSaver;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -17,32 +15,9 @@ public class Main{
 	 */
 
 	public static void main(String[] args) {
-/*
-		Tagger t = new Tagger();
-		try {
-			t.tagNews("Alexis metio 2 golazos en la premier Michelle Bachelet");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	/*	try {
-			Tagger.seed();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 
 		DatabaseManager.createDatabaseManager();
-
-		/*
-		try {
-			Tagger.miniSeed();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		
 		Spark.port(8080);
 		post("/", (request, response) -> {
 			NewArrivalHandler nah = new NewArrivalHandler();

@@ -1,6 +1,5 @@
 package getter;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
 
 import org.json.*;
 
@@ -13,12 +12,10 @@ import model.NewsItemData;
 public class NewsParser {
 	private String newsToParse;
 	private ArrayList<String> forTagger;
-	private Lock parserLock;
 	private ArrayList<NewsItemData> listAllNews;
 
-	public NewsParser(Lock l){
+	public NewsParser(){
 		newsToParse = "";
-		parserLock = l;
 		listAllNews = new ArrayList<NewsItemData>();
 		forTagger = new ArrayList<String>();
 
@@ -61,11 +58,11 @@ public class NewsParser {
 			listAllNews.add(recentNew);
 			forTagger.add(recentNew.getBody() + "ç" + recentNew.getLanguage());
 		}
+		for (NewsItemData newsItem : listAllNews) {
+			GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(newsItem);
+			getterSaverAdapter.start();
+		}
 
-		GetterSaverAdapter getterSaverAdapter = new GetterSaverAdapter(listAllNews, forTagger);
-		getterSaverAdapter.start();
-
-		parserLock.unlock();
 
 	}
 

@@ -2,6 +2,7 @@ package saver;
 
 import model.NewsItemData;
 import tagger.Tag;
+import tagger.Tagger;
 import tagger.Tag.DataSetType;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -26,6 +27,7 @@ public class NewsSaver {
 	private String nameColumn = "name";
 	private WebResource resource2;
 	private byte[] encodedBytes;
+	private Tagger tagger;
 
 	public NewsSaver() {
 		// port = System.getenv("NEO4J_PORT");
@@ -35,6 +37,7 @@ public class NewsSaver {
 		String txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
 		encodedBytes = Base64.encodeBase64((user + ":" + password).getBytes());
+		tagger = new Tagger();
 	}
 
 	/**
@@ -64,13 +67,22 @@ public class NewsSaver {
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
-		if(data.getTags() != null && !"null".equals(data.getTags())){
+		if(data.getTags() != null && !("null".equals(data.getTags()))){
 			String[] sepTags = data.getTags().split(",");
 			Tag[] tags = new Tag[sepTags.length];
 			for(int i = 0; i < tags.length; i++)
 				tags[i] = new Tag(sepTags[i], DataSetType.Tag);
 			saveNewsItemTags(tags, newsItemId);
 		}
+		//System.out.println("Saved news id: " + newsItemId);
+		//Incluímos los tags del Tagger
+		try {
+			saveNewsItemTags(tagger.tagNews(data.getBody()), newsItemId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//System.out.println("Saved news id: " + newsItemId);
 		saveProvider(data, newsItemId);
 		return newsItemId;
