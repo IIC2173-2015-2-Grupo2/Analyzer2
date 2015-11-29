@@ -52,7 +52,7 @@ public class Main{
 
 		get("/", (request, response) -> "status: on");
 		/*
-		for(int i = 0; i < 100 ; i++){
+		for(int i = 20; i < 100 ; i++){
 			NewsSaver saver = new NewsSaver();
 			NewsItemData item = new NewsItemData("Some title" + i, "Some date", "Some summary", "Body", "url", "image", "SantiApi", "es", "tag1, tag2, tag3");
 			saver.saveInDataBase(item);
