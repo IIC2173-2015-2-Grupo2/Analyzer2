@@ -20,8 +20,6 @@ public abstract class NLP {
 		language = lan;
 		capitalLetterWords = new ArrayList<String>();
 		repeatedWords = new ArrayList<String>();
-		//Llenamos la lista de las palabras con mayúsculas
-		fillCapitalLetterWords(text.substring(1));
 
 		//Borramos la puntuación (es independiente del lenguaje)
 		String[] punctuation = {".", ",", ";", ":", "-", "_", "(", ")", "?", "¿", "!", "¡", "'", "<", ">"};	
@@ -30,6 +28,9 @@ public abstract class NLP {
 		}
 		innerText = innerText.trim();
 
+		//Llenamos la lista de las palabras con mayúsculas
+		fillCapitalLetterWords(innerText);
+		
 		//Contamos las palabras repetidas
 		wordCount = findDuplicateString(innerText);
 
@@ -63,6 +64,8 @@ public abstract class NLP {
 		ArrayList<String> outputWords = new ArrayList<String>();
 		outputWords.addAll(repeatedWords);
 		outputWords.addAll(capitalLetterWords);
+		capitalLetterWords.clear();
+		repeatedWords.clear();
 		return outputWords;
 	}
 	
@@ -167,6 +170,11 @@ public abstract class NLP {
 			if(wordCount.containsKey(word)){
 				wordCount.remove(word);
 			}
+			for (int i = 0; i < capitalLetterWords.size(); i++) {
+				if(capitalLetterWords.get(i).compareToIgnoreCase(word) == 0){
+					capitalLetterWords.remove(i);
+				}
+			}
 		}
 	}
 
@@ -179,20 +187,23 @@ public abstract class NLP {
 		boolean lastWasCapital = false;
 		String temp = "";
 		for (String word : words) {
-			if(word.matches("^([A-Z][a-z]+)+$") && !lastWasCapital){
+			if(!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && !lastWasCapital){
 				lastWasCapital = true;
 				temp = word;
 			}
-			else if (word.matches("^([A-Z][a-z]+)+$") && lastWasCapital) {
+			else if (!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && lastWasCapital) {
 				temp = temp + " " + word;
 			}
 			else {
 				lastWasCapital = false;
 			}
-			if (!"".equals(temp) && !"I".equals(temp) && !lastWasCapital){
+			if (!("".equals(temp)) && !("I".equals(temp)) && !lastWasCapital){
 				capitalLetterWords.add(temp);
 				temp = "";
 			}
+		}
+		if (lastWasCapital){
+			capitalLetterWords.add(temp);
 		}
 	}
 

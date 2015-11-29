@@ -72,13 +72,13 @@ public class Tagger {
 
 
 
-	public Tag[] tagNews(String body) throws Exception{
+	public Tag[] tagNews(String body, String language) throws Exception{
 
 		if(body == null || body.isEmpty()){
 			return null;
 		}
 
-		ArrayList<String> arrlst = NLP.getTags(body.split("ç")[0], body.split("ç")[1]);
+		ArrayList<String> arrlst = NLP.getTags(body, language);
 		
 		ArrayList<Tag> preOutput = new ArrayList<Tag>();
 
@@ -109,7 +109,8 @@ public class Tagger {
 		for(int i = 0 ; i < output.length ; i++){
 			output[i] = preOutput.get(i);
 		}
-		
+		preOutput.clear();
+		arrlst.clear();
 		return output;
 	}
 

@@ -8,6 +8,7 @@ import tagger.Tag.DataSetType;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.codec.binary.Base64;
+import org.omg.CORBA.DATA_CONVERSION;
 
 import java.util.Map.Entry;
 
@@ -45,6 +46,20 @@ public class NewsSaver {
 	 * @param s NewsItemData de información con estructura [título, fecha, bajada, url, tags, entre otros]
 	 */
 	public int saveInDataBase(NewsItemData data){
+		/* NewsItemData debbuger = data;
+		Tag[] tags = null;
+		//Incluímos los tags del Tagger
+		try {
+			tags = tagger.tagNews(data.getBody(), data.getLanguage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(data.toString());
+		for (int i = 0; i < tags.length; i++) {
+			System.out.println("Tag " + i + ": " + tags[i].getContent());
+		}
+		System.out.println("\n");  PARA DEBUGGEO DEL TAGGER*/
 		//Creamos el nodo de la noticia
 		String newsItemCreatorPrefix = "CREATE (n:" + newsItemNodeLabel + " { ";
 		String newsItemCreatorSuffix = " }) RETURN ID(n)";
@@ -76,13 +91,12 @@ public class NewsSaver {
 		}
 		//Incluímos los tags del Tagger
 		try {
-			saveNewsItemTags(tagger.tagNews(data.getBody()), newsItemId);
+			saveNewsItemTags(tagger.tagNews(data.getBody(), data.getLanguage()), newsItemId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("Saved news id: " + newsItemId);
 		saveProvider(data, newsItemId);
 		return newsItemId;
 	}
