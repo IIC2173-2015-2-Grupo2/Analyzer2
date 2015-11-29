@@ -1,7 +1,6 @@
 package getter;
 
 
-import java.util.ArrayList;
 
 import model.NewsItemData;
 import saver.NewsSaver;
@@ -14,17 +13,17 @@ import saver.NewsSaver;
  *
  */
 public class GetterSaverAdapter extends Thread{
-	private ArrayList<NewsItemData> toProcess;
+	private NewsItemData toProcess;
 	private NewsSaver newsSaver;
-//	private DebuggerNewsSaver debuggerNewsSaver;
-	private ArrayList<String> forTagger;
-	
-	public GetterSaverAdapter(ArrayList<NewsItemData> allNews, ArrayList<String> forTagger){
+	//	private DebuggerNewsSaver debuggerNewsSaver;
+	//	private ArrayList<String> forTagger;
+
+	public GetterSaverAdapter(NewsItemData newsItem){
 		newsSaver = new NewsSaver();
 		//usado para debuggear
 		//debuggerNewsSaver = new DebuggerNewsSaver();
-		toProcess = allNews;
-		this.forTagger = forTagger;
+		toProcess = newsItem;
+		//		this.forTagger = forTagger;
 	}
 	public void run(){
 		saveNews();
@@ -34,14 +33,13 @@ public class GetterSaverAdapter extends Thread{
 	 * Guarda, de a una, las noticias en la base de datos.
 	 */
 	private void saveNews(){
-		for (NewsItemData newItem : toProcess){
-			int id = newsSaver.saveInDataBase(newItem);
-			
-			GetterTaggerAdapter getterTaggerAdapter = new GetterTaggerAdapter(forTagger, id);
-			getterTaggerAdapter.start();
-			
-			//usado para debuggear
-			//debuggerNewsSaver.saveInDatabase(newItem);
-		}
+		/*int id = */newsSaver.saveInDataBase(toProcess);
+
+		//			GetterTaggerAdapter getterTaggerAdapter = new GetterTaggerAdapter(forTagger, id);
+		//			getterTaggerAdapter.start();
+
+		//usado para debuggear
+		//debuggerNewsSaver.saveInDatabase(newItem);
+
 	}
 }

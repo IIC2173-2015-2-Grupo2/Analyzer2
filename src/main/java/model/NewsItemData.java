@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 
-import utils.Encoder;
 
 public class NewsItemData {
 
