@@ -64,7 +64,7 @@ public class NewsSaver {
 		String dataNewsItem = response2.getEntity(String.class);
 		int newsItemId = getIdFromJsonResult(dataNewsItem);
 		response2.close();
-		if(data.getTags() != null && !"null".equals(data.getTags())){
+		if(data.getTags() != null || !"null".equals(data.getTags())){
 			String[] sepTags = data.getTags().split(",");
 			Tag[] tags = new Tag[sepTags.length];
 			for(int i = 0; i < tags.length; i++)
