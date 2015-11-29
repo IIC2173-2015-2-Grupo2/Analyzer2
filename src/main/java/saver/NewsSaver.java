@@ -29,9 +29,9 @@ public class NewsSaver {
 
 	public NewsSaver() {
 		// port = System.getenv("NEO4J_PORT");
-		String host = System.getenv("NEO4J_HOST");
-		String password = System.getenv("NEO4J_PASS");
-		String user = System.getenv("NEO4J_USER");
+		String host = "arqui7.ing.puc.cl";
+		String password = "7c38caaee73a5564a3183c0970118725189ef64e9a565c982edb10e4388f43df";
+		String user = "neo4j";
 
 		String txUri = "http://" + host + "/db/data/transaction/commit";
 		resource2 = Client.create().resource(txUri);
@@ -72,7 +72,7 @@ public class NewsSaver {
 				tags[i] = new Tag(sepTags[i], DataSetType.Tag);
 			saveNewsItemTags(tags, newsItemId);
 		}
-		//System.out.println("Saved news id: " + newsItemId);
+		System.out.println("Saved news id: " + newsItemId);
 		saveProvider(data, newsItemId);
 		return newsItemId;
 	}
@@ -91,7 +91,7 @@ public class NewsSaver {
 		String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
 				+ "MATCH (a:NewsItem),(b:NewsProvider) "
 				+ "WHERE ID(a) = %d AND ID(b) = %d "
-				+ "CREATE (b)-[r:`posted`]->(a)\"} ]}", newsId, auxSourceId);
+				+ "CREATE UNIQUE (b)-[r:`posted`]->(a)\"} ]}", newsId, auxSourceId);
 
 		ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
 		//System.out.println("Saved provider id: " + auxSourceId);
@@ -115,7 +115,7 @@ public class NewsSaver {
 				String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
 						+ "MATCH (a:NewsItem),(b:%s) "
 						+ "WHERE ID(a) = %d AND ID(b) = %d "
-						+ "CREATE (b)-[r:`has`]->(a)\"} ]}", data[i].getDataSet().toString(), id, auxTagId);
+						+ "CREATE UNIQUE (b)-[r:`has`]->(a)\"} ]}", data[i].getDataSet().toString(), id, auxTagId);
 
 				ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
 				relationTag.close();

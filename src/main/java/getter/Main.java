@@ -1,9 +1,11 @@
 package getter;
 
-import static spark.Spark.post;
 import static spark.Spark.get;
+import static spark.Spark.post;
 
+import model.NewsItemData;
 import saver.DatabaseManager;
+import saver.NewsSaver;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -49,10 +51,12 @@ public class Main{
 		});
 
 		get("/", (request, response) -> "status: on");
-		/*
-		NewsSaver saver = new NewsSaver();
-		NewsItemData item = new NewsItemData("Some title", "Some date", "Some summary", "Body", "url", "image", "source", "es", "tag1, tag2, tag3");
-		saver.saveInDataBase(item);*/
+		
+		for(int i = 0; i < 100 ; i++){
+			NewsSaver saver = new NewsSaver();
+			NewsItemData item = new NewsItemData("Some title" + i, "Some date", "Some summary", "Body", "url", "image", "SantiApi", "es", "tag1, tag2, tag3");
+			saver.saveInDataBase(item);
+		}
 	}
 	/**
 	 * Procesa el post, es decir, comienza con la primera etapa del Pipe & Filter.
