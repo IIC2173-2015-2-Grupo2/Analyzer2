@@ -74,7 +74,7 @@ public class NewsItemData {
 		String toSanitize = str;
 		toSanitize = str.replaceAll("\"","");
 		toSanitize = str.replaceAll("\'","");
-		toSanitize.replaceAll("'",""); 
-		return Encoder.convertToUTF8(toSanitize);
+		toSanitize = toSanitize.replaceAll("'",""); 
+		return toSanitize;
 	}
 }
