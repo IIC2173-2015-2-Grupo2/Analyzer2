@@ -46,19 +46,6 @@ public abstract class NLP {
 				repeatedWords.add(word.getKey());
 			}
 		}
-	/*	for (String word : wordCount.keySet()) {
-			try{
-				int times = wordCount.get(word);
-				if(times >= 2){
-					repeatedWords.add(word);
-				}
-			}
-			catch (Exception e){
-				e.getMessage();
-			}
-
-		}*/
-
 
 		//Añadimos las palabras con mayúsculas y las palabras repetidas al output y lo retornamos
 		ArrayList<String> outputWords = new ArrayList<String>();
@@ -141,7 +128,7 @@ public abstract class NLP {
 				"gracias","porque", "puesto", "visto", "condición", "así", "entonces", "y"};
 		String[] personalPronouns = {"yo", "él", "ella", "ello", "vos", "tú", "usted", "nosotros", "nosotras", "ustedes",
 				"vosotros", "vosotras", "ellos", "ellas", "mí","conmigo", "ti", "contigo", "consigo"};
-		String[] extras = {"de", "que", "qué", "cómo", "ya", "del", "ha", "eso", "lo", "si", "sí", "no"};
+		String[] extras = {"se", "de", "que", "qué", "cómo", "ya", "del", "ha", "eso", "lo", "si", "sí", "no"};
 		String[] preposicions = {"ex", "a", "ante", "bajo", "cabe", "con", "contra", "de", "desde", "en", "entre", "hacia",
 				"hasta", "para", "por", "según", "sin", "so", "sobre", "tras"};
 		String[] adverbs = {"ahí", "allí", "aquí", "acá", "delante", "detrás", "arriba", "abajo", "cerca", "lejos",
@@ -184,27 +171,33 @@ public abstract class NLP {
 	 */
 	private static void fillCapitalLetterWords(String text){
 		String[] words = text.split(" ");
-		boolean lastWasCapital = false;
-		String temp = "";
+//		boolean lastWasCapital = false;
+//		String temp = "";
 		for (String word : words) {
-			if(!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && !lastWasCapital){
-				lastWasCapital = true;
-				temp = word;
-			}
-			else if (!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && lastWasCapital) {
-				temp = temp + " " + word;
-			}
-			else {
-				lastWasCapital = false;
-			}
-			if (!("".equals(temp)) && !("I".equals(temp)) && !lastWasCapital){
-				capitalLetterWords.add(temp);
-				temp = "";
+			if(!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && !("I".equals(word))){
+				capitalLetterWords.add(word);
 			}
 		}
-		if (lastWasCapital){
-			capitalLetterWords.add(temp);
-		}
+		
+//		for (String word : words) {
+//			if(!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && !lastWasCapital){
+//				lastWasCapital = true;
+//				temp = word;
+//			}
+//			else if (!("".equals(word)) && Character.isUpperCase(word.charAt(0)) && lastWasCapital) {
+//				temp = temp + " " + word;
+//			}
+//			else {
+//				lastWasCapital = false;
+//			}
+//			if (!("".equals(temp)) && !("I".equals(temp)) && !lastWasCapital){
+//				capitalLetterWords.add(temp);
+//				temp = "";
+//			}
+//		}
+//		if (lastWasCapital){
+//			capitalLetterWords.add(temp);
+//		}
 	}
 
 	/**
