@@ -129,7 +129,7 @@ public class NewsSaver {
 				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
 						"MERGE (n:"
 						+ data[i].getDataSet().toString() + " { "
-						+ nameColumn + "  : '" + data[i].getContent().trim() + "' }) RETURN ID(n)" +
+						+ nameColumn + "  : '" + sanitizeText(data[i].getContent().trim()) + "' }) RETURN ID(n)" +
 						"\"} ]}";
 
 				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
@@ -180,5 +180,13 @@ public class NewsSaver {
 		        .entity(entity)
 		        .header("Authorization", "Basic " + new String(bytes))
 		        .post(ClientResponse.class);
+	}
+	
+	public String sanitizeText(String str){
+		String toSanitize = str;
+		toSanitize = str.replaceAll("\"","");
+		toSanitize = str.replaceAll("\'","");
+		toSanitize = toSanitize.replaceAll("'",""); 
+		return toSanitize;
 	}
 }
