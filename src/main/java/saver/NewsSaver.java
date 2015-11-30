@@ -46,7 +46,7 @@ public class NewsSaver {
 	 * @param s NewsItemData de información con estructura [título, fecha, bajada, url, tags, entre otros]
 	 */
 	public int saveInDataBase(NewsItemData data){
-		/*NewsItemData debbuger = data;
+		/* NewsItemData debbuger = data;
 		Tag[] tags = null;
 		//Incluímos los tags del Tagger
 		try {
@@ -59,10 +59,7 @@ public class NewsSaver {
 		for (int i = 0; i < tags.length; i++) {
 			System.out.println("Tag " + i + ": " + tags[i].getContent());
 		}
-		System.out.println("\n"); // PARA DEBUGGEO DEL TAGGER*/
-		
-		
-		
+		System.out.println("\n");  PARA DEBUGGEO DEL TAGGER*/
 		//Creamos el nodo de la noticia
 		String newsItemCreatorPrefix = "CREATE (n:" + newsItemNodeLabel + " { ";
 		String newsItemCreatorSuffix = " }) RETURN ID(n)";
@@ -103,7 +100,6 @@ public class NewsSaver {
 
 		saveProvider(data, newsItemId);
 		return newsItemId;
-//		return 0;
 	}
 
 	public void saveProvider(NewsItemData news, int newsId){
@@ -128,35 +124,29 @@ public class NewsSaver {
 	}
 
 	public void saveNewsItemTags(Tag[] data, int id){
-	    if(data != null){
-	      for (int i = 0; i < data.length; i++) {
-	        String tagCreator = "MERGE (n:"
-	            + data[i].getDataSet().toString() + " { "
-	            + nameColumn + "  : '" + data[i].getContent().trim() + "' }) RETURN ID(n)" +
-	            "\"}";
-	        JsonObject inner = new JsonObject();
-	        inner.addProperty("statement", tagCreator);
-	        JsonArray arr = new JsonArray();
-	        arr.add(inner);
-	        JsonObject outer = new JsonObject();
-	        outer.add("statements", arr);
-	        
-	        ClientResponse responseTag = getClientResponse(resource2, outer, encodedBytes);
-	        String tagItem = responseTag.getEntity(String.class);
-	        int auxTagId = getIdFromJsonResult(tagItem);
-	        responseTag.close();
-	        //System.out.println("Saved tag id: " + auxTagId);
-	        
-	        String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
-	            + "MATCH (a:NewsItem),(b:%s) "
-	            + "WHERE ID(a) = %d AND ID(b) = %d "
-	            + "CREATE UNIQUE (b)-[r:has]-😠a)\"} ]}", data[i].getDataSet().toString(), id, auxTagId);
+		if(data != null){
+			for (int i = 0; i < data.length; i++) {
+				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
+						"MERGE (n:"
+						+ data[i].getDataSet().toString() + " { "
+						+ nameColumn + "  : '" + data[i].getContent().trim() + "' }) RETURN ID(n)" +
+						"\"} ]}";
 
-	        ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
-	        relationTag.close();
-	      }
-	    }
-	  }
+				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
+				String tagItem = responseTag.getEntity(String.class);
+				int auxTagId = getIdFromJsonResult(tagItem);
+				responseTag.close();
+				//System.out.println("Saved tag id: " + auxTagId);
+				String relationCreator = String.format("{\"statements\" : [ {\"statement\" : \""
+						+ "MATCH (a:NewsItem),(b:%s) "
+						+ "WHERE ID(a) = %d AND ID(b) = %d "
+						+ "CREATE UNIQUE (b)-[r:`has`]->(a)\"} ]}", data[i].getDataSet().toString(), id, auxTagId);
+
+				ClientResponse relationTag = getClientResponse(resource2, relationCreator, encodedBytes);
+				relationTag.close();
+			}
+		}
+	}
 
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
@@ -167,11 +157,10 @@ public class NewsSaver {
 	          .get(0).getAsJsonObject()
 	          .get("row").getAsInt();
 	    } else {
-	    	System.out.println(result);
-		    return Integer.parseInt(parser.parse(result).getAsJsonObject()
-		        .getAsJsonArray("errors")
-		        .get(0).getAsJsonObject()
-		        .get("message").getAsString().substring(0, 25).replaceAll("\\D+",""));
+	      return Integer.parseInt(parser.parse(result).getAsJsonObject()
+	          .getAsJsonArray("errors")
+	          .get(0).getAsJsonObject()
+	          .get("message").getAsString().substring(0, 25).replaceAll("\\D+",""));
 	    }
 	}
 
