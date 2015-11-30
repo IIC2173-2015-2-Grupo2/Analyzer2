@@ -84,7 +84,7 @@ public class Tagger {
 
 		for (int i = 0 ; i < arrlst.size() ; i++) {
 			String tag = arrlst.get(i);
-			if(tag == null){
+			if(tag == null || tag.trim().equals("")){
 				continue;
 			}
 			DataSetType dataSet = null;
