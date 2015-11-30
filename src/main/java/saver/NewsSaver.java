@@ -161,10 +161,11 @@ public class NewsSaver {
 	          .get(0).getAsJsonObject()
 	          .get("row").getAsInt();
 	    } else {
-	      return Integer.parseInt(parser.parse(result).getAsJsonObject()
-	          .getAsJsonArray("errors")
-	          .get(0).getAsJsonObject()
-	          .get("message").getAsString().substring(0, 25).replaceAll("\\D+",""));
+	    	System.out.println(result);
+		    return Integer.parseInt(parser.parse(result).getAsJsonObject()
+		        .getAsJsonArray("errors")
+		        .get(0).getAsJsonObject()
+		        .get("message").getAsString().substring(0, 25).replaceAll("\\D+",""));
 	    }
 	}
 
