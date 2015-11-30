@@ -150,18 +150,18 @@ public class NewsSaver {
 
 	private int getIdFromJsonResult(String result){
 		JsonParser parser = new JsonParser();
-		JsonArray aux = parser.parse(result).getAsJsonObject().getAsJsonArray("results");
-		if(aux.size() > 0){
-			return aux.get(0).getAsJsonObject()
-					.getAsJsonArray("data")
-					.get(0).getAsJsonObject()
-					.get("row").getAsInt();
-		} else {
-			return Integer.parseInt(parser.parse(result).getAsJsonObject()
-					.getAsJsonArray("errors")
-					.get(0).getAsJsonObject()
-					.get("message").getAsString().replaceAll("\\D+",""));
-		}
+	    JsonArray aux = parser.parse(result).getAsJsonObject().getAsJsonArray("results");
+	    if(aux.size() > 0){
+	      return aux.get(0).getAsJsonObject()
+	          .getAsJsonArray("data")
+	          .get(0).getAsJsonObject()
+	          .get("row").getAsInt();
+	    } else {
+	      return Integer.parseInt(parser.parse(result).getAsJsonObject()
+	          .getAsJsonArray("errors")
+	          .get(0).getAsJsonObject()
+	          .get("message").getAsString().substring(0, 25).replaceAll("\\D+",""));
+	    }
 	}
 
 	private ClientResponse getClientResponse(WebResource resource, JsonObject entity, byte[] bytes){
