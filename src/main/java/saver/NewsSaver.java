@@ -46,7 +46,7 @@ public class NewsSaver {
 	 * @param s NewsItemData de información con estructura [título, fecha, bajada, url, tags, entre otros]
 	 */
 	public int saveInDataBase(NewsItemData data){
-		/* NewsItemData debbuger = data;
+		/*NewsItemData debbuger = data;
 		Tag[] tags = null;
 		//Incluímos los tags del Tagger
 		try {
@@ -59,7 +59,10 @@ public class NewsSaver {
 		for (int i = 0; i < tags.length; i++) {
 			System.out.println("Tag " + i + ": " + tags[i].getContent());
 		}
-		System.out.println("\n");  PARA DEBUGGEO DEL TAGGER*/
+		System.out.println("\n"); // PARA DEBUGGEO DEL TAGGER*/
+		
+		
+		
 		//Creamos el nodo de la noticia
 		String newsItemCreatorPrefix = "CREATE (n:" + newsItemNodeLabel + " { ";
 		String newsItemCreatorSuffix = " }) RETURN ID(n)";
@@ -100,6 +103,7 @@ public class NewsSaver {
 
 		saveProvider(data, newsItemId);
 		return newsItemId;
+//		return 0;
 	}
 
 	public void saveProvider(NewsItemData news, int newsId){
