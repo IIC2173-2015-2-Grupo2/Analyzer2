@@ -126,13 +126,18 @@ public class NewsSaver {
 	public void saveNewsItemTags(Tag[] data, int id){
 		if(data != null){
 			for (int i = 0; i < data.length; i++) {
-				String tagsCreator = "{\"statements\" : [ {\"statement\" : \"" +
-						"MERGE (n:"
+				String tagsCreator = "MERGE (n:"
 						+ data[i].getDataSet().toString() + " { "
-						+ nameColumn + "  : '" + sanitizeText(data[i].getContent().trim()) + "' }) RETURN ID(n)" +
-						"\"} ]}";
+						+ nameColumn + "  : '" + sanitizeText(data[i].getContent().trim()) + "' }) RETURN ID(n)";
 
-				ClientResponse responseTag = getClientResponse(resource2, tagsCreator, encodedBytes);
+				JsonObject inner = new JsonObject();
+				inner.addProperty("statement", tagsCreator);
+				JsonArray arr = new JsonArray();
+				arr.add(inner);
+				JsonObject outer = new JsonObject();
+				outer.add("statements", arr);
+				
+				ClientResponse responseTag = getClientResponse(resource2, outer, encodedBytes);
 				String tagItem = responseTag.getEntity(String.class);
 				int auxTagId = getIdFromJsonResult(tagItem);
 				responseTag.close();
